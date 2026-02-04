@@ -1,0 +1,10 @@
+footer {
+    /* S'assure que le footer ne se fond pas dans le fond gris de la page */
+    z-index: 10;
+    background-color: #ffffff;
+}
+
+/* Optionnel : si vous voulez un footer très discret */
+.text-muted {
+    font-size: 0.85rem;
+}

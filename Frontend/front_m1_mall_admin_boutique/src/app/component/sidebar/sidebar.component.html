@@ -5,15 +5,44 @@
     <hr>
     <ul class="nav nav-pills flex-column mb-auto">
         <li class="nav-item">
-            <a href="#" class="nav-link active" aria-current="page">
+            <a [routerLink]="['/dashboard-admin']" routerLinkActive="active" class="nav-link text-white">
                 <i class="bi bi-speedometer2 me-2"></i> Dashboard
             </a>
         </li>
-        <li>
-            <a href="#" class="nav-link text-white">
-                <i class="bi bi-table me-2"></i> Commandes
+
+        <li class="nav-item">
+            <a class="nav-link text-white d-flex justify-content-between align-items-center" 
+               data-bs-toggle="collapse" 
+               href="#collapseConfig" 
+               role="button" 
+               aria-expanded="false" 
+               aria-controls="collapseConfig">
+                <span>
+                    <i class="bi bi-gear me-2"></i> Configurations
+                </span>
+                <i class="bi bi-chevron-down small"></i>
             </a>
+        
+            <div class="collapse" id="collapseConfig">
+                <ul class="nav flex-column ms-4 small">
+                    <li class="nav-item">
+                        <a class="nav-link text-white-50" [routerLink]="['/user-list']" routerLinkActive="text-white fw-bold">
+                            Utilisateurs
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <div class="collapse" id="collapseConfig">
+                <ul class="nav flex-column ms-4 small">
+                    <li class="nav-item">
+                        <a class="nav-link text-white-50" [routerLink]="['/user-']" routerLinkActive="text-white fw-bold">
+                            Boutiques
+                        </a>
+                    </li>
+                </ul>
+            </div>
         </li>
+
         <li>
             <a href="#" class="nav-link text-white">
                 <i class="bi bi-grid me-2"></i> Produits

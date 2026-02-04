@@ -1,0 +1,16 @@
+/* Style pour les liens du sous-menu */
+.nav-link.text-white-50:hover {
+    color: white !important;
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 4px;
+}
+
+/* Animation de la flèche quand le menu s'ouvre */
+[aria-expanded="true"] .bi-chevron-down {
+    transform: rotate(180deg);
+    transition: transform 0.2s;
+}
+
+[aria-expanded="false"] .bi-chevron-down {
+    transition: transform 0.3s;
+}
