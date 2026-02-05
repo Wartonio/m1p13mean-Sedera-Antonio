@@ -44,33 +44,37 @@ export class UserService {
     return this.http.get<User[]>(`${this.apiUrl}/user/all`,this.getHttpOptions());
   }
 
-  getUserNotInTeam(critere : string) : Observable<User[]>{
-    return this.http.get<User[]>(`${this.apiUrl}/user/noInTeam?critere=${critere}`,this.getHttpOptions());
+  changeStatus( id:string,newStatus:string) : Observable<void>{
+    return this.http.patch<void>(`${this.apiUrl}/user/disable/${id}?status=${newStatus}`,null,this.getHttpOptions());
   }
 
-  getUserByResp(id:number,critere : string) : Observable<User[]>{
-    return this.http.get<User[]>(`${this.apiUrl}/user/user-resp/${id}?critere=${critere}`,this.getHttpOptions());
-  }
+//   getUserNotInTeam(critere : string) : Observable<User[]>{
+//     return this.http.get<User[]>(`${this.apiUrl}/user/noInTeam?critere=${critere}`,this.getHttpOptions());
+//   }
 
-  insertDefaultUser(util: User) : Observable<void>{
-    return this.http.post<void>(`${this.apiUrl}/user/default`,util,this.getHttpOptions()); 
-  }
+//   getUserByResp(id:number,critere : string) : Observable<User[]>{
+//     return this.http.get<User[]>(`${this.apiUrl}/user/user-resp/${id}?critere=${critere}`,this.getHttpOptions());
+//   }
 
-  insertUser(util: User) : Observable<void>{
-    return this.http.post<void>(`${this.apiUrl}/user`,util,this.getHttpOptions());
-  }
+//   insertDefaultUser(util: User) : Observable<void>{
+//     return this.http.post<void>(`${this.apiUrl}/user/default`,util,this.getHttpOptions()); 
+//   }
 
-  updateUser(util: User) : Observable<void>{
-    return this.http.put<void>(`${this.apiUrl}/user`,util,this.getHttpOptions());
-  }
+//   insertUser(util: User) : Observable<void>{
+//     return this.http.post<void>(`${this.apiUrl}/user`,util,this.getHttpOptions());
+//   }
+
+//   updateUser(util: User) : Observable<void>{
+//     return this.http.put<void>(`${this.apiUrl}/user`,util,this.getHttpOptions());
+//   }
   
-  reinitialisePwd(id: number , newPassword: string) : Observable<void>{
-    return this.http.put<void>(`${this.apiUrl}/user/reinitialise/${id}?newPwd=${newPassword}`,null,this.getHttpOptions());
-  }
+//   reinitialisePwd(id: number , newPassword: string) : Observable<void>{
+//     return this.http.put<void>(`${this.apiUrl}/user/reinitialise/${id}?newPwd=${newPassword}`,null,this.getHttpOptions());
+//   }
 
-  deleteUser(id : number) : Observable<void>{
-    return this.http.put<void>(`${this.apiUrl}/user/${id}`,null,this.getHttpOptions());
-  }
+//   deleteUser(id : number) : Observable<void>{
+//     return this.http.put<void>(`${this.apiUrl}/user/${id}`,null,this.getHttpOptions());
+//   }
 
   private getHttpOptions() {
         const token = localStorage.getItem('jwtToken');

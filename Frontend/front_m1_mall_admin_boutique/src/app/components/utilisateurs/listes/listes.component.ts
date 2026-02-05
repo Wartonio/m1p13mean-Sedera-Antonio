@@ -4,6 +4,7 @@ import { PaginatorModule } from 'primeng/paginator';
 import { Router } from '@angular/router';
 import { UserService } from 'src/app/service/user.service';
 import { User } from 'src/app/model/user';
+import Swal from 'sweetalert2';
 
 
 @Component({
@@ -18,6 +19,7 @@ export class ListesComponent {
   page = 0;
   size = 5;
   users: User[] = [];
+  newStatus ='';
 
   constructor(
     private router: Router,
@@ -42,8 +44,47 @@ export class ListesComponent {
     this.router.navigate(['/user-edit']);
   }
 
-  toggleUserStatus(user: User): void {
-    console.log('Changer le statut de l\'utilisateur:', user);
+  toggleUserStatus(user: any): void {
+
+    const isActive = user.status === 'active';
+    const newStatus = isActive ? 'inactive' : 'active';
+
+    Swal.fire({
+      title: isActive ? 'Désactiver utilisateur ?' : 'Activer utilisateur ?',
+      text: `Voulez-vous vraiment ${isActive ? 'désactiver' : 'activer'} cet utilisateur ?`,
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: isActive ? '#dc3545' : '#198754',
+      cancelButtonText: 'Annuler',
+      confirmButtonText: isActive ? 'Désactiver' : 'Activer'
+    }).then((result) => {
+
+      if (result.isConfirmed) {
+
+        this.userService.changeStatus(user._id, newStatus).subscribe({
+          next: () => {
+            // Mise à jour locale
+            user.status = newStatus;
+
+            Swal.fire({
+              icon: 'success',
+              title: 'Succès',
+              text: `Utilisateur ${newStatus === 'active' ? 'activé' : 'désactivé'} avec succès`,
+              timer: 1500,
+              showConfirmButton: false
+            });
+          },
+          error: () => {
+            Swal.fire({
+              icon: 'error',
+              title: 'Erreur',
+              text: 'Une erreur est survenue, veuillez réessayer'
+            });
+          }
+        });
+
+      }
+    });
   }
 
   resetPassword(user: User): void {
@@ -53,6 +94,7 @@ export class ListesComponent {
   addUser(): void {
     this.router.navigate(['/user-add']);
   }
+
   onPageChange(event: any): void {
     this.page = event.page;
     this.size = event.rows;

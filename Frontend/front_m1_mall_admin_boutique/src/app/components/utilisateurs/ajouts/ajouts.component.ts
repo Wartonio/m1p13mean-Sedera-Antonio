@@ -1,10 +1,8 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
-interface Role {
-  idRole: number | string;
-  designation: string;
-}
+import { User } from 'src/app/model/user';
+
 @Component({
   selector: 'app-ajouts',
   standalone: true,
@@ -13,11 +11,7 @@ interface Role {
   styleUrl: './ajouts.component.css'
 })
 export class AjoutsComponent {
-  roles: Role[] = [
-    { idRole: 1, designation: 'Administrateur' },
-    { idRole: 2, designation: 'Boutique' },
-    { idRole: 3, designation: 'Achteur' }
-  ];
+  user :  User | null = null;
 
   ngOnInit(): void {}
 
