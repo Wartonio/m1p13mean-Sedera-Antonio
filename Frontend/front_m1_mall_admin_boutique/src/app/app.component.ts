@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { AuthService } from './service/auth.service';
 
 @Component({
   selector: 'app-root',
@@ -7,4 +8,15 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'front_m1_mall';
+
+  isLoggedIn: boolean = false;
+
+  constructor(private authService: AuthService) {}
+
+  ngOnInit() {
+    this.authService.getIsLoggedIn().subscribe(isLoggedIn => {
+      this.isLoggedIn = isLoggedIn;
+      // console.log("value of isLoggedIn ->",isLoggedIn)
+    });
+  }
 }

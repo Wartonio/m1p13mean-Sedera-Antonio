@@ -23,14 +23,14 @@
                     <tbody>
                         <tr *ngFor="let user of users">
                             <th scope="row">{{ user.id }}</th>
-                            <td>{{ user.name }}</td>
+                            <td>{{ user.nom }}</td>
                             <td>{{ user.email }}</td>
                             <td>{{ user.role }}</td>
                             <td>
                                 <span class="badge" 
                                       [ngClass]="{
-                                          'bg-success': user.status === 'Actif',
-                                          'bg-danger': user.status === 'Inactif',
+                                          'bg-success': user.status === 'active',
+                                          'bg-danger': user.status === 'inactive',
                                           'bg-warning text-dark': user.status === 'En attente'
                                       }">
                                     {{ user.status }}
@@ -41,10 +41,10 @@
                                     <i class="bi bi-pencil-square"></i>
                                 </button>
                                 <button class="btn btn-sm me-2" 
-                                        [ngClass]="{'btn-outline-warning': user.status === 'Actif', 'btn-outline-success': user.status === 'Inactif'}" 
+                                        [ngClass]="{'btn-outline-warning': user.status === 'active', 'btn-outline-success': user.status === 'inactive'}" 
                                         (click)="toggleUserStatus(user)" 
-                                        [title]="user.status === 'Actif' ? 'Désactiver' : 'Activer'">
-                                    <i class="bi" [ngClass]="{'bi-person-x': user.status === 'Actif', 'bi-person-check': user.status === 'Inactif'}"></i>
+                                        [title]="user.status === 'active' ? 'Désactiver' : 'Activer'">
+                                    <i class="bi" [ngClass]="{'bi-person-x': user.status === 'active', 'bi-person-check': user.status === 'inactive'}"></i>
                                 </button>
                                 <button class="btn btn-sm btn-outline-secondary" (click)="resetPassword(user)" title="Réinitialiser mot de passe">
                                     <i class="bi bi-arrow-clockwise"></i>

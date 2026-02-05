@@ -5,6 +5,7 @@ import { ButtonModule } from 'primeng/button';
 import { CheckboxModule } from 'primeng/checkbox';
 import { InputTextModule } from 'primeng/inputtext';
 import { PaginatorModule } from 'primeng/paginator';
+import { HttpClientModule } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -27,7 +28,8 @@ import { LoginComponent } from './components/login/login.component';
     ButtonModule,      // Débloque <p-button>
     CheckboxModule,
     PaginatorModule, 
-    InputTextModule
+    InputTextModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]
