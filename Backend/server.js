@@ -29,6 +29,14 @@ app.use('/api/auth', authRoutes);
 const userRoutes = require('./routes/user');
 app.use('/api/user',auth,userRoutes);
 
+// crud role
+const roleRoutes = require('./routes/role');
+app.use('/api/role',auth,roleRoutes);
+
+// crud category
+const categoryRoutes = require('./routes/category');
+app.use('/api/category',auth,categoryRoutes);
+
 
 
 // Lancement du serveur

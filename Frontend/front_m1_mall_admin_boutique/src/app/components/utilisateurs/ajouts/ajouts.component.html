@@ -18,22 +18,12 @@
                 <div class="row g-3">
                     <div class="col-md-6">
                         <label class="form-label small fw-bold text-muted">Nom</label>
-                        <input type="text" name="nom" class="form-control bg-light border-0 py-2" placeholder="Ex: Jean Dupont">
+                        <input type="text" name="nom" [(ngModel)]="user.nom" class="form-control bg-light border-0 py-2" placeholder="Ex: Jean Dupont">
                     </div>
-                    <!-- <div class="col-md-6">
-                        <label class="form-label small fw-bold text-muted">Prénom</label>
-                        <input type="text" name="prenom" class="form-control bg-light border-0 py-2" placeholder="Ex: Jean">
-                    </div> -->
-
                     <div class="col-md-6">
                         <label class="form-label small fw-bold text-muted">Email professionnel</label>
-                        <input type="email" name="email" class="form-control bg-light border-0 py-2" placeholder="nom@entreprise.com">
+                        <input type="email" name="email" [(ngModel)]="user.email" class="form-control bg-light border-0 py-2" placeholder="nom@entreprise.com">
                     </div>
-
-                    <!-- <div class="col-md-6">
-                        <label class="form-label small fw-bold text-muted">Interim</label>
-                        <input type="text" name="interim" class="form-control bg-light border-0 py-2" placeholder="Entrer l'interim">
-                    </div> -->
                     <div class="col-md-6">
                         <label class="form-label small fw-bold text-muted">Rôle système</label>
                       
@@ -41,21 +31,40 @@
                           name="role"
                           id="role"
                           class="form-select bg-light border-0 py-2"
+                          [(ngModel)]="user.role"
                           required>
                       
-                          <option value="">-- Sélectionner un rôle --</option>
-                          <option value="ADMIN">Administrateur</option>
-                          <option value="BOUTIQUE">Boutique</option>
-                          <option value="ACHETEUR">Acheteur</option>
+                          <option *ngFor="let r of roles" [value]="r.ref">
+                            {{ r.designation }}
+                          </option>
                       
                         </select>
-                      </div>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label small fw-bold text-muted">Status</label>
+                      
+                        <select
+                          name="status"
+                          id="status"
+                          class="form-select bg-light border-0 py-2"
+                          [(ngModel)]="user.status"
+                          required>
+                      
+                          <option  value="active">
+                            Active
+                          </option>
+                          <option  value="inactive">
+                            Inactive
+                          </option>
+                      
+                        </select>
+                    </div>
                       
 
                     <div class="col-md-6">
                         <label class="form-label small fw-bold text-muted">Mot de passe provisoire</label>
                         <div class="input-group">
-                            <input type="password" name="mot_de_passe" class="form-control bg-light border-0 py-2" id="mot_de_passe" placeholder="••••••••">
+                            <input type="password" name="mot_de_passe" [(ngModel)]="user.password" class="form-control bg-light border-0 py-2" id="mot_de_passe" placeholder="••••••••">
                             <span class="input-group-text bg-light border-0"><i class="bi bi-eye"></i></span>
                         </div>
                         <small class="text-muted">L'utilisateur devra changer son mot de passe à la première connexion.</small>

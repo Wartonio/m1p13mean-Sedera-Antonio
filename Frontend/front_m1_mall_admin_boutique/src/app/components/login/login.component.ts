@@ -39,8 +39,6 @@ export class LoginComponent {
             return;
           }
         
-          this.authService.saveToken(token);
-        
           const routeByRole: Record<string, string> = {
             admin: '/dashboard-admin',
             boutique:  '/dashboard-boutique'

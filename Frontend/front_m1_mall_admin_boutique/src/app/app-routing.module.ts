@@ -5,6 +5,11 @@ import { DashboardAdminComponent } from './components/dashboard-admin/dashboard-
 import { ListesComponent } from './components/utilisateurs/listes/listes.component';
 import { AjoutsComponent } from './components/utilisateurs/ajouts/ajouts.component';
 import { ModifsComponent } from './components/utilisateurs/modifs/modifs.component';
+import { ListesRComponent } from './components/roles/listes-r/listes-r.component';
+import { AjoutsRComponent } from './components/roles/ajouts-r/ajouts-r.component';
+import { AddCComponent } from './components/cat-shop/add-c/add-c.component';
+import { LsitCComponent } from './components/cat-shop/lsit-c/lsit-c.component';
+import { EditCComponent } from './components/cat-shop/edit-c/edit-c.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -12,6 +17,11 @@ const routes: Routes = [
   { path: 'user-list', component: ListesComponent },
   { path: 'user-add', component: AjoutsComponent },
   { path: 'user-edit', component: ModifsComponent },
+  { path: 'role-list', component: ListesRComponent },
+  { path: 'role-add', component: AjoutsRComponent },
+  { path: 'cat-list', component: LsitCComponent },
+  { path: 'cat-add', component: AddCComponent },
+  { path: 'cat-edit', component: EditCComponent },
   { path: '', redirectTo: '/login', pathMatch: 'full' },
   { path: '**', redirectTo: 'login' } 
 ];

@@ -3,12 +3,12 @@
         <!-- <span class="navbar-brand d-none d-md-block">Dashboard</span> -->
 
         <div class="ms-auto d-flex align-items-center">
-            <a class="nav-link me-3 position-relative" href="#">
+            <!-- <a class="nav-link me-3 position-relative" href="#">
                 <i class="bi bi-bell fs-5"></i>
                 <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" style="font-size: 0.6rem;">
                     3
                 </span>
-            </a>
+            </a> -->
 
             <div class="dropdown">
                 <a href="#" class="d-flex align-items-center text-decoration-none dropdown-toggle text-dark" id="profileMenu" data-bs-toggle="dropdown" aria-expanded="false">
@@ -18,7 +18,7 @@
                 <ul class="dropdown-menu dropdown-menu-end shadow" aria-labelledby="profileMenu">
                     <li><a class="dropdown-item" href="#"><i class="bi bi-person me-2"></i>Paramètres</a></li>
                     <li><hr class="dropdown-divider"></li>
-                    <li><a class="dropdown-item text-danger" href="#"><i class="bi bi-box-arrow-right me-2"></i>Déconnexion</a></li>
+                    <li><a class="dropdown-item text-danger" (click)="logout()"><i class="bi bi-box-arrow-right me-2"></i>Déconnexion</a></li>
                 </ul>
             </div>
         </div>

@@ -15,9 +15,9 @@ router.post('/signup', async (req, res) => {
         nom,
         email,
         password: hashedPassword,
-        role: role || 'ACHETEUR', 
+        role: role || 'acheteur', 
         status: status || 'inactive', 
-        boutiqueId: role === 'BOUTIQUE' ? boutiqueId : null,
+        boutiqueId: role === 'boutique' ? boutiqueId : null,
         createdAt: new Date()
       });
   

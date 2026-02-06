@@ -5,6 +5,7 @@ import { Observable, BehaviorSubject } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { environment } from './conf/env';
 import { ResponseAuth } from '../model/responseAuth';
+import { User } from '../model/user';
 
 @Injectable({
   providedIn: 'root'
@@ -21,10 +22,15 @@ export class AuthService {
     return this.http.post<ResponseAuth>(`${this.apiUrl}/auth/login`, user).pipe(
       tap((response: ResponseAuth) => {
         console.log("value of isLogged ->",response)
+        this.saveToken(response.token);
         this.isLoggedInSubject.next(true);
       })
     );
   } 
+
+  insertDefaultUser(util: User) : Observable<void>{
+    return this.http.post<void>(`${this.apiUrl}/auth/signup`,util); 
+  }
   
   saveToken(token: string) {
     localStorage.setItem('jwtToken', token);
@@ -43,8 +49,9 @@ export class AuthService {
   }
 
   logout() {
-    localStorage.removeItem('jwtToken');
-    this.isLoggedInSubject.next(false);
-    this.router.navigate(['/login']);
+    localStorage.removeItem('jwtToken'); // Vide tout
+    this.isLoggedInSubject.next(false); // Update l'UI
+    this.router.navigate(['/login']); // Redirige
   }
+
 }

@@ -48,6 +48,22 @@ export class UserService {
     return this.http.patch<void>(`${this.apiUrl}/user/disable/${id}?status=${newStatus}`,null,this.getHttpOptions());
   }
 
+  getOne(id: string) : Observable<User> {
+    return this.http.get<User>(`${this.apiUrl}/user/one/${id}`,this.getHttpOptions());
+  }
+  
+  insertUser(util: User) : Observable<void>{
+    return this.http.post<void>(`${this.apiUrl}/user/insert`,util,this.getHttpOptions());
+  }
+  
+  updateUser(util: User) : Observable<void>{
+    return this.http.patch<void>(`${this.apiUrl}/user/update`,util,this.getHttpOptions());
+  }
+  
+  getMe() : Observable<User> {
+    return this.http.get<User>(`${this.apiUrl}/user/me`,this.getHttpOptions());
+  }
+
 //   getUserNotInTeam(critere : string) : Observable<User[]>{
 //     return this.http.get<User[]>(`${this.apiUrl}/user/noInTeam?critere=${critere}`,this.getHttpOptions());
 //   }
@@ -60,13 +76,7 @@ export class UserService {
 //     return this.http.post<void>(`${this.apiUrl}/user/default`,util,this.getHttpOptions()); 
 //   }
 
-//   insertUser(util: User) : Observable<void>{
-//     return this.http.post<void>(`${this.apiUrl}/user`,util,this.getHttpOptions());
-//   }
 
-//   updateUser(util: User) : Observable<void>{
-//     return this.http.put<void>(`${this.apiUrl}/user`,util,this.getHttpOptions());
-//   }
   
 //   reinitialisePwd(id: number , newPassword: string) : Observable<void>{
 //     return this.http.put<void>(`${this.apiUrl}/user/reinitialise/${id}?newPwd=${newPassword}`,null,this.getHttpOptions());

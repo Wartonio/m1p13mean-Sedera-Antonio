@@ -13,6 +13,7 @@ import { MainComponent } from './component/main/main.component';
 import { HeaderComponent } from './component/header/header.component';
 import { SidebarComponent } from './component/sidebar/sidebar.component';
 import { LoginComponent } from './components/login/login.component';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -29,7 +30,8 @@ import { LoginComponent } from './components/login/login.component';
     CheckboxModule,
     PaginatorModule, 
     InputTextModule,
-    HttpClientModule
+    HttpClientModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
