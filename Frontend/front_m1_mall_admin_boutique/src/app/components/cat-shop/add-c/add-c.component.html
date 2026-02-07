@@ -1,1 +1,41 @@
-<p>add-c works!</p>
+<div class="container-fluid p-4">
+    <div class="d-flex align-items-center justify-content-between mb-4">
+        <h1 class="h3 mb-0 text-gray-800 fw-bold">Gestion des Catégories</h1>
+        <button (click)="redirectBack()" class="btn btn-sm btn-outline-secondary rounded-3">
+            <i class="bi bi-arrow-left me-1"></i> Retour à la liste
+        </button>
+    </div>
+
+    <div class="card shadow-sm border-0 rounded-4">
+        <div class="card-header bg-white border-0 py-3">
+            <h6 class="m-0 font-weight-bold text-primary">
+                <i class="bi bi-person-plus me-2"></i>Ajouter un nouvel catégorie
+            </h6>
+        </div>
+
+        <div class="card-body px-lg-5 py-4">
+            <form (ngSubmit)="insertCategory()">
+                <div class="row g-3">
+                    <div class="col-md-6">
+                        <label class="form-label small fw-bold text-muted">Réfférence</label>
+                        <input type="text" name="ref" [(ngModel)]="cat.ref" class="form-control bg-light border-0 py-2" placeholder="Ex: resto">
+                    </div>
+
+                    <div class="col-md-6">
+                        <label class="form-label small fw-bold text-muted">Designation</label>
+                        <input type="text" name="designation" [(ngModel)]="cat.designation" class="form-control bg-light border-0 py-2" placeholder="Restaurant">
+                    </div>
+
+                    <div class="col-md-12 mt-4 text-end">
+                        <hr class="mb-4 text-muted opacity-25">
+                        <button type="button" class="btn btn-light px-4 me-2 rounded-3" (click)="redirectBack()">Annuler</button>
+                        <button type="submit" class="btn btn-primary px-5 rounded-3 fw-bold">
+                            <i class="bi bi-check-lg me-2"></i>Créer le catégorie
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+

@@ -44,6 +44,16 @@ export class UserService {
     return this.http.get<User[]>(`${this.apiUrl}/user/all`,this.getHttpOptions());
   }
 
+  // user.service.ts
+  getUsers(page: number, limit: number, search: string): Observable<any> {
+    const params = {
+      page: page.toString(),
+      limit: limit.toString(),
+      search: search
+    };
+    return this.http.get(`${this.apiUrl}/user/pagination`, { params,...this.getHttpOptions()});
+  }
+
   changeStatus( id:string,newStatus:string) : Observable<void>{
     return this.http.patch<void>(`${this.apiUrl}/user/disable/${id}?status=${newStatus}`,null,this.getHttpOptions());
   }

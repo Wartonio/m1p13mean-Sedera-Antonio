@@ -3,8 +3,10 @@ import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
 import { Role } from 'src/app/model/role';
+import { Shop } from 'src/app/model/shop';
 import { User } from 'src/app/model/user';
 import { RoleService } from 'src/app/service/role.service';
+import { ShopService } from 'src/app/service/shop.service';
 import { UserService } from 'src/app/service/user.service';
 import Swal from 'sweetalert2';
 
@@ -26,22 +28,33 @@ export class AjoutsComponent {
     boutiqueId: ''
   };
   roles : Role[]=[];
+  shops : Shop[]=[];
   isLoading = false;
 
   ngOnInit() {
     this.getAllRoles();
+    this.getAllShops();
   }
 
   constructor(
     private router: Router,
     private roleService : RoleService,
-    private userService : UserService
+    private userService : UserService,
+    private shopService : ShopService
   ) {}
 
   getAllRoles(){
     this.roleService.getListRoles().subscribe(
       (data : Role[])=>{
         this.roles = data;
+      }
+    )
+  }
+  
+  getAllShops(){
+    this.shopService.getListShops().subscribe(
+      (data : Shop[])=>{
+        this.shops = data;
       }
     )
   }
@@ -71,6 +84,6 @@ export class AjoutsComponent {
 
 
   redirectBack(): void{
-    this.router.navigate(['/users']);
+    this.router.navigate(['/user-list']);
   }
 }

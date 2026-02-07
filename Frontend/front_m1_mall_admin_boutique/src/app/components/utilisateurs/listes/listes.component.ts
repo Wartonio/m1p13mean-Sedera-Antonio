@@ -5,6 +5,8 @@ import { Router } from '@angular/router';
 import { UserService } from 'src/app/service/user.service';
 import { User } from 'src/app/model/user';
 import Swal from 'sweetalert2';
+import { Subject } from 'rxjs';
+import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 
 
 @Component({
@@ -15,11 +17,14 @@ import Swal from 'sweetalert2';
   styleUrl: './listes.component.css'
 })
 export class ListesComponent {
-  totalElements = 0;
-  page = 0;
-  size = 5;
-  users: User[] = [];
+  currentPage: number = 1;
+  totalPages: number = 1;
+  limit: number = 5;
+  search: string = '';
+  totalUsers: number = 0;
+  users: any[] = [];
   newStatus ='';
+  private searchSubject = new Subject<string>();
 
   constructor(
     private router: Router,
@@ -27,21 +32,42 @@ export class ListesComponent {
   ) {}
 
   ngOnInit(): void {
+    this.searchSubject.pipe(
+      debounceTime(300),
+      distinctUntilChanged()
+    ).subscribe(searchValue => {
+      this.search = searchValue;
+      this.currentPage = 1; 
+      this.getAllUser();
+    });
     this.getAllUser();
   }
 
   getAllUser(){
-    this.userService.getListUsers().subscribe(
-      (data : User[])=> {
-        this.users = data;
-      }
-    )
+    this.userService.getUsers(this.currentPage, this.limit, this.search).subscribe({
+      next: (data) => {
+        this.users = data.users;
+        this.totalPages = data.totalPages;
+        this.totalUsers = data.total;
+      },
+      error: (err) => console.error("Erreur chargement", err)
+    });
+  }
+
+  onSearch(event: any): void {
+    this.searchSubject.next(event.target.value);
+  }
+
+  onPageChange(event: any) {
+      this.currentPage = event.page + 1; // PrimeNG commence à 0, ton API à 1
+      this.limit = event.rows;           // Permet à l'utilisateur de changer "10 par page"
+      this.getAllUser();
   }
 
   // Fonctions d'action (vides pour l'exemple)
-  editUser(): void {
+  editUser(id : string): void {
     console.log('Modifier l\'utilisateur:');
-    this.router.navigate(['/user-edit']);
+    this.router.navigate(['/user-edit',id]);
   }
 
   toggleUserStatus(user: any): void {
@@ -93,10 +119,5 @@ export class ListesComponent {
 
   addUser(): void {
     this.router.navigate(['/user-add']);
-  }
-
-  onPageChange(event: any): void {
-    this.page = event.page;
-    this.size = event.rows;
   }
 }

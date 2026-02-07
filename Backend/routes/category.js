@@ -6,7 +6,7 @@ const Category = require('../models/Category');
 
 router.get('/all', auth, async (req, res) => {
   try {
-      const categorys = await Category.find().select('-password').sort({ createdAt: -1 });    
+      const categorys = await Category.find().sort({ createdAt: -1 });    
       res.status(200).json(categorys);
   } catch (error) {
       res.status(500).json({ error: "Erreur lors de la récupération desCategorys" });

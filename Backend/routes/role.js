@@ -6,7 +6,7 @@ const Role = require('../models/Role');
 
 router.get('/all', auth, async (req, res) => {
   try {
-      const roles = await Role.find().select('-password').sort({ createdAt: -1 });    
+      const roles = await Role.find().sort({ createdAt: -1 });    
       res.status(200).json(roles);
   } catch (error) {
       res.status(500).json({ error: "Erreur lors de la récupération des roles" });

@@ -37,6 +37,10 @@ app.use('/api/role',auth,roleRoutes);
 const categoryRoutes = require('./routes/category');
 app.use('/api/category',auth,categoryRoutes);
 
+// crud shop
+const categoryShops = require('./routes/shop');
+app.use('/api/shop',auth,categoryShops);
+
 
 
 // Lancement du serveur

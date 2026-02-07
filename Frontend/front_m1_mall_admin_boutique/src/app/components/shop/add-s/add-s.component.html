@@ -1,0 +1,90 @@
+<div class="container-fluid p-4">
+    <div class="d-flex align-items-center justify-content-between mb-4">
+        <h1 class="h3 mb-0 text-gray-800 fw-bold">Gestion des Boutiques</h1>
+        <button (click)="redirectBack()" class="btn btn-sm btn-outline-secondary rounded-3">
+            <i class="bi bi-arrow-left me-1"></i> Retour à la liste
+        </button>
+    </div>
+
+    <div class="card shadow-sm border-0 rounded-4">
+        <div class="card-header bg-white border-0 py-3">
+            <h6 class="m-0 font-weight-bold text-primary">
+                <i class="bi bi-person-plus me-2"></i>Ajouter une nouvelle boutique
+            </h6>
+        </div>
+
+        <div class="card-body px-lg-5 py-4">
+            <form (ngSubmit)="insertshop()">
+                <div class="row g-3">
+                    <div class="col-md-6">
+                        <label class="form-label small fw-bold text-muted">Nom</label>
+                        <input type="text" name="nom" [(ngModel)]="shop.nom" class="form-control bg-light border-0 py-2" placeholder="Ex: Gastro pizza">
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label small fw-bold text-muted">Localisation</label>
+                        <input type="text" name="localisation" [(ngModel)]="shop.localisation" class="form-control bg-light border-0 py-2" placeholder="Ex: Box02,2ème étage">
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label small fw-bold text-muted">Heure d'ouverture</label>
+                        <input type="text" name="ho" [(ngModel)]="shop.heureOuveture" class="form-control bg-light border-0 py-2" placeholder="Ex: 08:00">
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label small fw-bold text-muted">Heure fe fermeture</label>
+                        <input type="text" name="hf" [(ngModel)]="shop.heureFermeture" class="form-control bg-light border-0 py-2" placeholder="Ex: 17:00">
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label small fw-bold text-muted">Fréquence d'ouverture</label>
+                        <input type="text" name="journal" [(ngModel)]="shop.journal" class="form-control bg-light border-0 py-2" placeholder="Ex: 6j/7">
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label small fw-bold text-muted">Exception</label>
+                        <input type="text" name="remarque" [(ngModel)]="shop.remarque" class="form-control bg-light border-0 py-2" placeholder="Ex: Samedi, fermeture à 15:00">
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label small fw-bold text-muted">Categorie boutique</label>
+                      
+                        <select
+                          name="cat"
+                          id="cat"
+                          class="form-select bg-light border-0 py-2"
+                          [(ngModel)]="shop.category"
+                          required>
+                      
+                          <option *ngFor="let r of cats" [value]="r.ref">
+                            {{ r.designation }}
+                          </option>
+                      
+                        </select>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label small fw-bold text-muted">Status</label>
+                      
+                        <select
+                          name="status"
+                          id="status"
+                          class="form-select bg-light border-0 py-2"
+                          [(ngModel)]="shop.status"
+                          required>
+                      
+                          <option  value="active">
+                            Active
+                          </option>
+                          <option  value="inactive">
+                            Inactive
+                          </option>
+                      
+                        </select>
+                    </div>
+
+                    <div class="col-md-12 mt-4 text-end">
+                        <hr class="mb-4 text-muted opacity-25">
+                        <button type="button" class="btn btn-light px-4 me-2 rounded-3" (click)="redirectBack()">Annuler</button>
+                        <button type="submit" class="btn btn-primary px-5 rounded-3 fw-bold">
+                            <i class="bi bi-check-lg me-2"></i>Créer la boutique
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

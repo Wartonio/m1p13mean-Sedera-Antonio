@@ -14,6 +14,39 @@ router.get('/all', auth, async (req, res) => {
   }
 });
 
+router.get('/pagination', auth, async (req, res) => {
+  try {
+    const page = parseInt(req.query.page) || 1;
+    const limit = parseInt(req.query.limit) || 10;
+    const search = req.query.search || '';
+
+    const query = {
+      $or: [
+        { nom: { $regex: search, $options: 'i' } },
+        { email: { $regex: search, $options: 'i' } }
+      ]
+    };
+    const [users, total] = await Promise.all([
+      User.find(query)
+        .select('-password')
+        .sort({ createdAt: -1 })
+        .limit(limit)
+        .skip((page - 1) * limit),
+      User.countDocuments(query) 
+    ]);
+
+    res.status(200).json({
+      users,
+      total,
+      currentPage: page,
+      totalPages: Math.ceil(total / limit)
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Erreur lors de la récupération des utilisateurs" });
+  }
+});
+
 router.get('/one/:id', auth, async (req, res) => {
   try {
       const userId = req.params.id;
@@ -79,7 +112,7 @@ router.patch('/update', auth, async (req, res) => {
       }
   
       const updatedUser = await User.findByIdAndUpdate(
-        req.body.id,
+        req.body._id,
         { $set: updateData },
         { new: true, runValidators: true }
       ).select('-password');

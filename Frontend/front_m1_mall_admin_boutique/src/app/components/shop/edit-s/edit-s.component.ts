@@ -1,27 +1,38 @@
+import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Category } from 'src/app/model/category';
+import { Shop } from 'src/app/model/shop';
 import { CategoryService } from 'src/app/service/category.service';
+import { ShopService } from 'src/app/service/shop.service';
 import Swal from 'sweetalert2';
 
 @Component({
-  selector: 'app-edit-c',
+  selector: 'app-edit-s',
   standalone: true,
-  imports: [FormsModule],
-  templateUrl: './edit-c.component.html',
-  styleUrl: './edit-c.component.css'
+  imports: [CommonModule,FormsModule],
+  templateUrl: './edit-s.component.html',
+  styleUrl: './edit-s.component.css'
 })
-export class EditCComponent {
+export class EditSComponent {
   id ='';
-  category = {
+  shop = {
     _id: '',
-    ref: '',
-    designation: ''
+    nom: '',
+    category: '',
+    localisation: '',
+    heureOuveture: '',
+    heureFermeture: '',
+    journal: '',
+    remarque: '',
+    status: ''
   };
+  categories : Category[]=[];
   isLoading = false;
 
   constructor(
+    private shopService : ShopService,
     private categoryService : CategoryService,
     private router : Router,
     private route : ActivatedRoute
@@ -34,18 +45,33 @@ export class EditCComponent {
         this.loadCategorySelected();
       }
     });
+    this.loadsCat();
+  }
+
+  loadsCat(){
+    this.categoryService.getListCategorys().subscribe(
+      (data : Category[])=>{
+        this.categories =data;
+      }
+    )
   }
 
   loadCategorySelected(){
     if (!this.id) {
       return;
     }
-    this.categoryService.getOne(this.id).subscribe({
-      next: (o : Category) => {
-        this.category ={
-          _id : o._id,
-          ref : o.ref ?? '',
-          designation : o.designation ?? ''
+    this.shopService.getOne(this.id).subscribe({
+      next: (o : Shop) => {
+        this.shop ={
+          _id: o._id,
+          nom: o.nom ?? '',
+          category: o.category ?? '',
+          localisation: o.localisation ?? '',
+          heureOuveture: o.heureOuveture ?? '',
+          heureFermeture: o.heureFermeture ?? '',
+          journal: o.journal ?? '',
+          remarque: o.remarque ?? '',
+          status: o.status ?? ''
         };
       },
       error: () => {
@@ -59,13 +85,13 @@ export class EditCComponent {
   }
 
   update(){
-    this.categoryService.updateCategory(this.category).subscribe({
+    this.shopService.updateShop(this.shop).subscribe({
       next: () => {
         this.redirectBack();
         Swal.fire({
           icon: 'success',
           title: 'Succès',
-          text: `Catégorie mis à jour`,
+          text: `Shop mis à jour`,
           timer: 1500,
           showConfirmButton: false
         }); 
@@ -81,6 +107,6 @@ export class EditCComponent {
   }
 
   redirectBack(): void{
-    this.router.navigate(['/cat-list']);
+    this.router.navigate(['/shop-list']);
   }
 }
