@@ -4,6 +4,8 @@ import { Router } from '@angular/router';
 import { PaginatorModule } from 'primeng/paginator';
 import { Shop } from 'src/app/model/shop';
 import { ShopService } from 'src/app/service/shop.service';
+import { Subject } from 'rxjs';
+import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 import Swal from 'sweetalert2';
 
 @Component({
@@ -14,11 +16,14 @@ import Swal from 'sweetalert2';
   styleUrl: './list-s.component.css'
 })
 export class ListSComponent {
-  totalElements = 0;
-  page = 0;
-  size = 5;
+  currentPage: number = 1;
+  totalPages: number = 1;
+  limit: number = 10;
+  search: string = '';
+  totalShops: number = 0;
   shops: Shop[] = [];
   newStatus ='';
+  private searchSubject = new Subject<string>();
 
   constructor(
     private router: Router,
@@ -26,18 +31,38 @@ export class ListSComponent {
   ) {}
 
   ngOnInit(): void {
+    this.searchSubject.pipe(
+      debounceTime(300),
+      distinctUntilChanged()
+    ).subscribe(searchValue => {
+      this.search = searchValue;
+      this.currentPage = 1; 
+      this.getAllShop();
+    });
     this.getAllShop();
   }
 
   getAllShop(){
-    this.shopService.getListShops().subscribe(
-      (data : Shop[])=> {
-        this.shops = data;
-      }
-    )
+    this.shopService.getShops(this.currentPage, this.limit, this.search).subscribe({
+      next: (data) => {
+        this.shops = data.shops;
+        this.totalPages = data.totalPages;
+        this.totalShops = data.total;
+      },
+      error: (err) => console.error("Erreur chargement", err)
+    });
   }
 
-  // Fonctions d'action (vides pour l'exemple)
+  onSearch(event: any): void {
+    this.searchSubject.next(event.target.value);
+  }
+
+  onPageChange(event: any) {
+      this.currentPage = event.page + 1; // PrimeNG commence à 0, ton API à 1
+      this.limit = event.rows;           // Permet à l'utilisateur de changer "10 par page"
+      this.getAllShop();
+  }
+
   editShop(id:string): void {
     this.router.navigate(['/shop-edit',id]);
   }
@@ -91,10 +116,5 @@ export class ListSComponent {
 
   addShop(): void {
     this.router.navigate(['/shop-add']);
-  }
-
-  onPageChange(event: any): void {
-    this.page = event.page;
-    this.size = event.rows;
   }
 }

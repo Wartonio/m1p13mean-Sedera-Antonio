@@ -19,7 +19,7 @@ import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 export class ListesComponent {
   currentPage: number = 1;
   totalPages: number = 1;
-  limit: number = 5;
+  limit: number = 10;
   search: string = '';
   totalUsers: number = 0;
   users: any[] = [];

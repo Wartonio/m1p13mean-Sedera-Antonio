@@ -13,6 +13,38 @@ router.get('/all', auth, async (req, res) => {
   }
 });
 
+router.get('/pagination', auth, async (req, res) => {
+  try {
+    const page = parseInt(req.query.page) || 1;
+    const limit = parseInt(req.query.limit) || 10;
+    const search = req.query.search || '';
+
+    const query = {
+      $or: [
+        { nom: { $regex: search, $options: 'i' } },
+        { localisation: { $regex: search, $options: 'i' } }
+      ]
+    };
+    const [shops, total] = await Promise.all([
+      Shop.find(query)
+        .sort({ createdAt: -1 })
+        .limit(limit)
+        .skip((page - 1) * limit),
+      Shop.countDocuments(query) 
+    ]);
+
+    res.status(200).json({
+      shops,
+      total,
+      currentPage: page,
+      totalPages: Math.ceil(total / limit)
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Erreur lors de la récupération des boutiques" });
+  }
+});
+
 router.get('/one/:id', auth, async (req, res) => {
   try {
       const userId = req.params.id;

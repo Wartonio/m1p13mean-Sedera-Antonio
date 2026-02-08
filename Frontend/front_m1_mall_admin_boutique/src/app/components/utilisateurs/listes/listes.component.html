@@ -79,14 +79,14 @@
                     <p-paginator 
                         [rows]="limit" 
                         [totalRecords]="totalUsers" 
-                        [rowsPerPageOptions]="[5, 10, 20, 50]"
+                        [rowsPerPageOptions]="[10, 20, 50]"
                         (onPageChange)="onPageChange($event)"
                         styleClass="border-0 bg-transparent">
                     </p-paginator>
                 </div>
             </div>
             
-            <div *ngIf="users.length === 0" class="alert alert-info mt-4 text-center">
+            <div *ngIf="totalUsers === 0" class="alert alert-info mt-4 text-center">
                 Aucun utilisateur à afficher.
             </div>
         </div>

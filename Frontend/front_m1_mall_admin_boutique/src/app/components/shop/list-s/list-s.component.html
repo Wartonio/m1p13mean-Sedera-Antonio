@@ -8,6 +8,17 @@
 
     <div class="card shadow-sm border-0 rounded-4">
         <div class="card-body p-4">
+            <div class="row mb-4">
+                <div class="col-md-4">
+                    <span class="p-input-icon-left w-100">
+                        <i class="bi bi-search"></i> <input type="text" 
+                               pInputText 
+                               class="form-control ps-5 rounded-pill border-0 shadow-sm" 
+                               (input)="onSearch($event)" 
+                               placeholder="Rechercher un boutique (Nom, Localisation...)">
+                    </span>
+                </div>
+            </div>
             <div class="table-responsive">
                 <table class="table table-hover align-middle mb-0">
                     <thead class="bg-light">
@@ -70,15 +81,18 @@
                         </tr>
                     </tbody>
                 </table>
-                <p-paginator 
-                    [rows]="size" 
-                    [totalRecords]="totalElements" 
-                    (onPageChange)="onPageChange($event)" 
-                    [rowsPerPageOptions]="[5, 10, 15]">
-                </p-paginator>
+                <div class="card-footer bg-white border-0 py-3">
+                    <p-paginator 
+                        [rows]="limit" 
+                        [totalRecords]="totalShops" 
+                        [rowsPerPageOptions]="[10, 20, 50]"
+                        (onPageChange)="onPageChange($event)"
+                        styleClass="border-0 bg-transparent">
+                    </p-paginator>
+                </div>
             </div>
             
-            <div *ngIf="shops.length === 0" class="alert alert-info mt-4 text-center">
+            <div *ngIf="totalShops === 0" class="alert alert-info mt-4 text-center">
                 Aucun utilisateur à afficher.
             </div>
         </div>

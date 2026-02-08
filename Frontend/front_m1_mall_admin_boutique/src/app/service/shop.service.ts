@@ -19,6 +19,15 @@ export class ShopService {
     return this.http.get<Shop[]>(`${this.apiUrl}/shop/all`,this.getHttpOptions());
   }
 
+  getShops(page: number, limit: number, search: string): Observable<any> {
+    const params = {
+      page: page.toString(),
+      limit: limit.toString(),
+      search: search
+    };
+    return this.http.get(`${this.apiUrl}/shop/pagination`, { params,...this.getHttpOptions()});
+  }
+
   changeStatus( id:string,newStatus:string) : Observable<void>{
     return this.http.patch<void>(`${this.apiUrl}/shop/disable/${id}?status=${newStatus}`,null,this.getHttpOptions());
   }
