@@ -24,6 +24,7 @@ router.post('/signup', async (req, res) => {
       await user.save();
       res.status(201).json({ message: 'Utilisateur créé avec succès !' });
     } catch (error) {
+      console.error(error);
       res.status(500).json({ error: "Erreur lors de la création" });
     }
 });
