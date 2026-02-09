@@ -41,6 +41,14 @@ app.use('/api/category',auth,categoryRoutes);
 const categoryShops = require('./routes/shop');
 app.use('/api/shop',auth,categoryShops);
 
+// crud category produit
+const categoryproduct = require('./routes/categoryproduct');
+app.use('/api/categoryproduct',categoryproduct);
+
+//crud product
+const product =require('./routes/product');
+app.use('/api/product',product);
+
 
 
 // Lancement du serveur

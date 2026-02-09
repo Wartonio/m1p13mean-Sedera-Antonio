@@ -14,6 +14,9 @@ import { AddSComponent } from './components/shop/add-s/add-s.component';
 import { ListSComponent } from './components/shop/list-s/list-s.component';
 import { EditSComponent } from './components/shop/edit-s/edit-s.component';
 import { DashboardBoutiqueComponent } from './components/dashboard-boutique/dashboard-boutique.component';
+import { ListecategoryproduitComponent } from './components/categoryproduit/listecategoryproduit/listecategoryproduit.component';
+import { AddcategoryproduitComponent } from './components/categoryproduit/addcategoryproduit/addcategoryproduit.component';
+import { ListproduitComponent } from './components/product/listproduit/listproduit.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -25,9 +28,12 @@ const routes: Routes = [
   { path: 'role-list', component: ListesRComponent },
   { path: 'role-add', component: AjoutsRComponent },
   { path: 'cat-list', component: LsitCComponent },
+  { path: 'catproduct-list', component: ListecategoryproduitComponent },
+  { path: 'Listproduct', component: ListproduitComponent },
   { path: 'cat-add', component: AddCComponent },
   { path: 'cat-edit/:id', component: EditCComponent },
   { path: 'shop-list', component: ListSComponent },
+  { path: 'addcatprod', component: AddcategoryproduitComponent },
   { path: 'shop-add', component: AddSComponent },
   { path: 'shop-edit/:id', component: EditSComponent },
   { path: '', redirectTo: '/login', pathMatch: 'full' },
