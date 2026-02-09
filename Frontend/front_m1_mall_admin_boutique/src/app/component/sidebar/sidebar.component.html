@@ -1,11 +1,78 @@
 <div class="d-flex flex-column flex-shrink-0 p-3 text-white bg-dark vh-100" style="width: 250px;">
-    <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
+    <a [routerLink]="['/dashboard-admin']" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none" *ngIf="user?.role === 'admin'">
         <span class="fs-4 fw-bold">ADMINISTRATOR</span>
     </a>
+    <a [routerLink]="['/dashboard-boutique']" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none" *ngIf="user?.role === 'boutique'">
+        <span class="fs-4 fw-bold">SHOP</span>
+    </a>
     <hr>
-    <ul class="nav nav-pills flex-column mb-auto">
+    <ul class="nav nav-pills flex-column mb-auto" *ngIf="user?.role === 'admin'">
         <li class="nav-item">
             <a [routerLink]="['/dashboard-admin']" routerLinkActive="active" class="nav-link text-white">
+                <i class="bi bi-speedometer2 me-2"></i> Dashboard
+            </a>
+        </li>
+
+        <li class="nav-item">
+            <a class="nav-link text-white d-flex justify-content-between align-items-center" 
+               data-bs-toggle="collapse" 
+               href="#collapseConfig" 
+               role="button" 
+               aria-expanded="false" 
+               aria-controls="collapseConfig">
+                <span>
+                    <i class="bi bi-gear me-2"></i> Configurations
+                </span>
+                <i class="bi bi-chevron-down small"></i>
+            </a>
+        
+            <div class="collapse" id="collapseConfig">
+                <ul class="nav flex-column ms-4 small">
+                    <li class="nav-item">
+                        <a class="nav-link text-white-50" [routerLink]="['/user-list']" routerLinkActive="text-white fw-bold">
+                            Utilisateurs
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <div class="collapse" id="collapseConfig">
+                <ul class="nav flex-column ms-4 small">
+                    <li class="nav-item">
+                        <a class="nav-link text-white-50" [routerLink]="['/role-list']" routerLinkActive="text-white fw-bold">
+                            Role
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <div class="collapse" id="collapseConfig">
+                <ul class="nav flex-column ms-4 small">
+                    <li class="nav-item">
+                        <a class="nav-link text-white-50" [routerLink]="['/cat-list']" routerLinkActive="text-white fw-bold">
+                            Catégorie boutique
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <div class="collapse" id="collapseConfig">
+                <ul class="nav flex-column ms-4 small">
+                    <li class="nav-item">
+                        <a class="nav-link text-white-50" [routerLink]="['/shop-list']" routerLinkActive="text-white fw-bold">
+                            Boutique
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </li>
+
+        <li>
+            <a href="#" class="nav-link text-white">
+                <i class="bi bi-grid me-2"></i> Produits
+            </a>
+        </li>
+    </ul>
+    <ul class="nav nav-pills flex-column mb-auto" *ngIf="user?.role === 'boutique'">
+        <li class="nav-item">
+            <a [routerLink]="['/dashboard-boutique']" routerLinkActive="active" class="nav-link text-white">
                 <i class="bi bi-speedometer2 me-2"></i> Dashboard
             </a>
         </li>

@@ -13,10 +13,12 @@ import { EditCComponent } from './components/cat-shop/edit-c/edit-c.component';
 import { AddSComponent } from './components/shop/add-s/add-s.component';
 import { ListSComponent } from './components/shop/list-s/list-s.component';
 import { EditSComponent } from './components/shop/edit-s/edit-s.component';
+import { DashboardBoutiqueComponent } from './components/dashboard-boutique/dashboard-boutique.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'dashboard-admin', component: DashboardAdminComponent },
+  { path: 'dashboard-boutique', component: DashboardBoutiqueComponent },
   { path: 'user-list', component: ListesComponent },
   { path: 'user-add', component: AjoutsComponent },
   { path: 'user-edit/:id', component: ModifsComponent },
