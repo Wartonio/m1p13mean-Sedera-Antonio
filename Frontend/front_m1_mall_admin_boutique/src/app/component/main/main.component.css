@@ -8,3 +8,25 @@ footer {
 .text-muted {
     font-size: 0.85rem;
 }
+footer {
+    font-family: 'Inter', sans-serif;
+}
+
+.text-secondary-hover:hover {
+    color: var(--bs-primary) !important;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+footer a:hover {
+    color: white !important;
+    transition: 0.3s;
+}
+
+footer .badge {
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
