@@ -1,0 +1,122 @@
+/* Style général de la Navbar */
+.main-navbar {
+    height: 80px;
+    transition: all 0.3s ease;
+}
+
+.navbar {
+    position: sticky;
+    top: 0;
+    z-index: 1020; /* S'assure que la barre passe au-dessus du reste */
+    background-color: rgba(255, 255, 255, 0.95); /* Légère transparence pour le style */
+    backdrop-filter: blur(10px); /* Effet de flou sur le contenu qui passe derrière */
+    transition: all 0.3s ease-in-out;
+}
+
+/* Logo stylisé */
+.logo-icon {
+    background: var(--bs-primary); /* Utilise la couleur primaire Bootstrap */
+    width: 35px;
+    height: 35px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+}
+
+.brand-text {
+    letter-spacing: -0.5px;
+    font-size: 1.25rem;
+}
+
+/* Barre de recherche */
+.search-box {
+    background: #f4f6f9;
+    border-radius: 50px;
+    width: 250px;
+    height: 40px;
+    transition: width 0.3s ease;
+}
+
+.search-box:focus-within {
+    width: 320px;
+    background: #edf1f7;
+    border: 1px solid #dee2e6;
+}
+
+/* Liens de navigation */
+.nav-hover {
+    color: #555 !important;
+    position: relative;
+}
+
+.active-link {
+    color: var(--bs-primary) !important;
+    font-weight: 700;
+}
+
+.active-link::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 15%;
+    width: 70%;
+    height: 3px;
+    background: var(--bs-primary);
+    border-radius: 10px;
+}
+
+/* Boutons d'action */
+.btn-action {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    border: none;
+    background: transparent;
+    transition: all 0.2s;
+    font-size: 1.1rem;
+}
+
+.btn-action:hover {
+    background: #f8f9fa;
+    color: var(--bs-primary);
+}
+
+/* Badge panier */
+.cart-badge {
+    position: absolute;
+    top: 5px;
+    right: 2px;
+    background: #ff4d4f;
+    color: white;
+    font-size: 10px;
+    font-weight: bold;
+    padding: 2px 6px;
+    border-radius: 20px;
+    border: 2px solid white;
+}
+
+/* Bouton utilisateur */
+.btn-user {
+    background: #f8f9fa;
+    border: 1px solid #eee;
+    padding: 6px 12px;
+    border-radius: 50px;
+    transition: all 0.2s;
+}
+
+.btn-user:hover {
+    background: #fff;
+    border-color: var(--bs-primary);
+    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+}
+
+.avatar-circle {
+    width: 28px;
+    height: 28px;
+    background: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}

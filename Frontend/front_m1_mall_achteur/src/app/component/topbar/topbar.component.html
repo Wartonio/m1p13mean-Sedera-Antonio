@@ -1,0 +1,67 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-white border-bottom shadow-sm sticky-top">
+    <div class="container px-3 px-lg-4">
+      
+      <a class="navbar-brand d-flex align-items-center" routerLink="/">
+        <div class="logo-icon me-2">
+          <i class="pi pi-shopping-cart text-white"></i>
+        </div>
+        <span class="brand-text fw-bold">CENTRE<span class="text-primary">COMMERCIAL</span></span>
+      </a>
+  
+      <button class="navbar-toggler border-0 shadow-none" type="button" data-bs-toggle="collapse" data-bs-target="#topbarMenu">
+        <i class="pi pi-bars"></i>
+      </button>
+  
+      <div class="collapse navbar-collapse" id="topbarMenu">
+        
+        <ul class="navbar-nav mx-auto mb-2 mb-lg-0 fw-medium">
+          <li class="nav-item px-lg-2">
+            <a class="nav-link nav-hover" routerLink="/home" routerLinkActive="active-link">Accueil</a>
+          </li>
+          <li class="nav-item px-lg-2">
+            <a class="nav-link nav-hover" routerLink="/products" routerLinkActive="active-link">Produits</a>
+          </li>
+          <li class="nav-item px-lg-2">
+            <a class="nav-link nav-hover" routerLink="/categories" routerLinkActive="active-link">Catégories</a>
+          </li>
+        </ul>
+  
+        <div class="search-box d-none d-xl-flex align-items-center me-4">
+          <i class="pi pi-search ms-3 text-muted"></i>
+          <input type="text" class="form-control border-0 shadow-none bg-transparent" placeholder="Rechercher un article...">
+        </div>
+  
+        <div class="d-flex align-items-center gap-2 actions-group">
+          
+          <button class="btn btn-action d-none d-sm-inline-flex">
+            <i class="pi pi-heart"></i>
+          </button>
+  
+          <button class="btn btn-action position-relative me-1">
+            <i class="pi pi-shopping-cart"></i>
+            <span class="cart-badge">3</span>
+          </button>
+  
+          <div class="vr mx-2 d-none d-lg-block text-black-50" style="height: 25px;"></div>
+  
+          <div class="dropdown">
+            <button class="btn btn-user d-flex align-items-center gap-2" data-bs-toggle="dropdown">
+              <div class="avatar-circle">
+                <i class="pi pi-user text-primary"></i>
+              </div>
+              <span class="d-none d-xl-inline fw-semibold small">Mon Compte</span>
+            </button>
+  
+            <ul class="dropdown-menu dropdown-menu-end border-0 shadow-lg mt-3">
+              <li class="px-3 py-2 border-bottom mb-2 d-xl-none text-muted small fw-bold text-uppercase">Menu</li>
+              <li><a class="dropdown-item py-2" routerLink="/profile"><i class="pi pi-user me-2"></i>Profil</a></li>
+              <li><a class="dropdown-item py-2" routerLink="/orders"><i class="pi pi-box me-2"></i>Mes commandes</a></li>
+              <li><hr class="dropdown-divider"></li>
+              <li><button class="dropdown-item py-2 text-danger"><i class="pi pi-sign-out me-2"></i>Déconnexion</button></li>
+            </ul>
+          </div>
+        </div>
+  
+      </div>
+    </div>
+</nav>
