@@ -47,7 +47,7 @@ export class LoginComponent {
           const target = routeByRole[role] ?? '/login'; 
         
           this.router.navigate([target], { replaceUrl: true });
-
+          
           if (!(role in routeByRole)) {
             Swal.fire('Attention', `Rôle "${data?.role}" non reconnu.`, 'warning');
           }
