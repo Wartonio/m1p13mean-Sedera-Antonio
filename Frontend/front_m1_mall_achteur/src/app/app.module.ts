@@ -14,6 +14,8 @@ import { LoginComponent } from './components/login/login.component';
 import { FormsModule } from '@angular/forms';
 import { TopbarComponent } from './component/topbar/topbar.component';
 import { HomeComponent } from './components/home/home.component';
+import { ProductComponent } from './components/product/product.component';
+import { ShopComponent } from './components/shop/shop.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +23,9 @@ import { HomeComponent } from './components/home/home.component';
     TopbarComponent,
     MainComponent,
     LoginComponent,
-    HomeComponent
+    HomeComponent,
+    ProductComponent,
+    ShopComponent
   ],
   imports: [
     BrowserModule,

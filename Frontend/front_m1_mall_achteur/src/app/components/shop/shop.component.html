@@ -1,0 +1,56 @@
+<div class="container py-5">
+    <div class="row align-items-center mb-5 gy-3">
+      <div class="col-md-4">
+        <h2 class="fw-bold m-0">Nos Boutiques</h2>
+      </div>
+      <div class="col-md-5">
+        <div class="search-box d-flex align-items-center bg-white border rounded-pill px-3 py-2 shadow-sm">
+          <i class="pi pi-search text-muted me-2"></i>
+          <input type="text" class="form-control border-0 shadow-none bg-transparent" placeholder="Trouver une boutique par nom...">
+        </div>
+      </div>
+      <div class="col-md-3 text-md-end">
+        <span class="badge bg-primary-light text-primary py-2 px-3 rounded-pill">
+          {{ shops.length }} Enseignes disponibles
+        </span>
+      </div>
+    </div>
+  
+    <div class="row g-4">
+      <div class="col-12 col-sm-6 col-lg-3" *ngFor="let s of shops">
+        <div class="card h-100 border-0 shadow-sm shop-card overflow-hidden">
+          
+            <div class="image-container">
+    
+                <img *ngIf="s.image" [src]="s.image" [alt]="s.name" class="shop-img">
+                
+                <div *ngIf="!s.image" class="d-flex flex-column align-items-center">
+                    <i class="pi pi-image placeholder-icon"></i>
+                    <small class="text-light-emphasis mt-2">Aucun visuel</small>
+                </div>
+            
+                <div class="category-tag">{{ s.category }}</div>
+            </div>
+  
+          <div class="card-body">
+            <h5 class="card-title fw-bold text-dark mb-1">{{ s.name }}</h5>
+            
+            <div class="d-flex align-items-center text-primary small mb-3">
+              <i class="pi pi-map-marker me-1"></i>
+              <span class="fw-medium">{{ s.location }}</span>
+            </div>
+  
+            <p class="card-text text-muted small mb-0">
+              {{ s.description }}
+            </p>
+          </div>
+  
+          <div class="card-footer bg-transparent border-0 p-3">
+            <button class="btn btn-dark w-100 rounded-pill py-2">
+              Visiter la boutique
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

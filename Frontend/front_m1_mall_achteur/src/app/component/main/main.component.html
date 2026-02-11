@@ -3,17 +3,67 @@
         <router-outlet></router-outlet>
     </div>
 
-    <footer class="bg-white border-top py-3 mt-4">
-        <div class="container-fluid px-4">
-            <div class="d-flex align-items-center justify-content-between small">
-                <div class="text-muted">Copyright &copy; Centre commercial, M1, fev 2026</div>
-                <div>
-                    <ul>
-                        <li>ANDRIANARIMALALA Rindra Ny Aiko Antonio 1935</li>
-                        <li>RABEARISOA Fitahina Sedera 1972</li>
-                    </ul>
-                </div>
+    <footer class="bg-dark text-white pt-5 pb-3 mt-5">
+        <div class="container">
+          <div class="row gy-4">
+            
+            <div class="col-lg-4 col-md-6">
+              <h5 class="fw-bold mb-3 text-primary">CENTRE<span class="text-white">COMMERCIAL</span></h5>
+              <p class="text-secondary small">
+                Projet MEAN Stack - Master 1. Une plateforme innovante pour la gestion de produits et de boutiques en temps réel.
+              </p>
+              <div class="d-flex gap-3">
+                <i class="pi pi-facebook text-secondary-hover pointer"></i>
+                <i class="pi pi-twitter text-secondary-hover pointer"></i>
+                <i class="pi pi-github text-secondary-hover pointer"></i>
+              </div>
             </div>
+      
+            <div class="col-lg-3 col-md-6">
+              <h6 class="text-uppercase fw-bold mb-3 small">Navigation</h6>
+              <ul class="list-unstyled text-secondary small">
+                <li class="mb-2"><a routerLink="/home" class="text-decoration-none text-secondary">Accueil</a></li>
+                <li class="mb-2"><a routerLink="/product" class="text-decoration-none text-secondary">Produits</a></li>
+                <li class="mb-2"><a routerLink="/shop" class="text-decoration-none text-secondary">Boutiques</a></li>
+              </ul>
+            </div>
+      
+            <div class="col-lg-5 col-md-12">
+              <h6 class="text-uppercase fw-bold mb-3 small">Développeurs du Projet</h6>
+              <div class="row">
+                <div class="col-6">
+                  <div class="d-flex align-items-center gap-2">
+                    <div class="badge bg-primary rounded-circle p-2"><i class="pi pi-user"></i></div>
+                    <div class="small">
+                      <span class="d-block fw-bold text-white">ANDRIANARIMALAL Rindra Ny Aiko Antonio</span>
+                      <span class="text-secondary opacity-75">Matricule 1935</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-6">
+                  <div class="d-flex align-items-center gap-2">
+                    <div class="badge bg-primary rounded-circle p-2"><i class="pi pi-user"></i></div>
+                    <div class="small">
+                      <span class="d-block fw-bold text-white">RABEARISOA Fitahina Sedera</span>
+                      <span class="text-secondary opacity-75">Matricule 1972</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+      
+          </div>
+      
+          <hr class="my-4 border-secondary opacity-25">
+      
+          <div class="d-flex flex-column flex-md-row justify-content-between align-items-center gap-2 small">
+            <div class="text-secondary">
+              &copy; 2026 <strong>Centre Commercial</strong>. Tous droits réservés.
+            </div>
+            <div class="text-secondary opacity-50">
+              Mention M1 IT - Février 2026
+            </div>
+          </div>
         </div>
-    </footer>
+      </footer>
 </div>

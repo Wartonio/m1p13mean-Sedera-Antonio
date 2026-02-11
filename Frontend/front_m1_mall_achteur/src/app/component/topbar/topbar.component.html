@@ -19,17 +19,17 @@
             <a class="nav-link nav-hover" routerLink="/home" routerLinkActive="active-link">Accueil</a>
           </li>
           <li class="nav-item px-lg-2">
-            <a class="nav-link nav-hover" routerLink="/products" routerLinkActive="active-link">Produits</a>
+            <a class="nav-link nav-hover" routerLink="/product" routerLinkActive="active-link"> Produits</a>
           </li>
           <li class="nav-item px-lg-2">
-            <a class="nav-link nav-hover" routerLink="/categories" routerLinkActive="active-link">Catégories</a>
+            <a class="nav-link nav-hover" routerLink="/shop" routerLinkActive="active-link">Boutique</a>
           </li>
         </ul>
   
-        <div class="search-box d-none d-xl-flex align-items-center me-4">
+        <!-- <div class="search-box d-none d-xl-flex align-items-center me-4">
           <i class="pi pi-search ms-3 text-muted"></i>
           <input type="text" class="form-control border-0 shadow-none bg-transparent" placeholder="Rechercher un article...">
-        </div>
+        </div> -->
   
         <div class="d-flex align-items-center gap-2 actions-group">
           
@@ -57,7 +57,7 @@
               <li><a class="dropdown-item py-2" routerLink="/profile"><i class="pi pi-user me-2"></i>Profil</a></li>
               <li><a class="dropdown-item py-2" routerLink="/orders"><i class="pi pi-box me-2"></i>Mes commandes</a></li>
               <li><hr class="dropdown-divider"></li>
-              <li><button class="dropdown-item py-2 text-danger"><i class="pi pi-sign-out me-2"></i>Déconnexion</button></li>
+              <li><button class="dropdown-item py-2 text-danger" (click)="logout()"><i class="pi pi-sign-out me-2"></i>Déconnexion</button></li>
             </ul>
           </div>
         </div>
