@@ -49,6 +49,10 @@ app.use('/api/categoryproduct',categoryproduct);
 const product =require('./routes/product');
 app.use('/api/product',product);
 
+//crud stock
+const stock =require('./routes/stock');
+app.use('/api/stock',stock);
+
 
 
 // Lancement du serveur
