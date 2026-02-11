@@ -13,4 +13,45 @@ router.get('/all', async (req, res) => {
   }
 });
 
+// router.post('/insertproduct',async (req,res)=>{
+//     try {
+//         const { designation,reference,category,description,image } =req.body;
+//         const product =new Product({
+//             designation,
+//             reference,
+//             category,
+//             description,
+//             image
+//         });
+//         await product.save();
+//         res.status(200).json({message: 'nouvaue produit cree'});
+//     } catch (error) {
+//         console.error(error);
+//         res.status(500).json()
+//     }
+// // }
+router.post('/insertproduct', async (req, res) => {
+    try {
+        const { designation, reference, category, description,price, image } = req.body;
+
+        const product = new Product({
+            designation,
+            reference,
+            category,
+            description,
+            price,
+            image
+        });
+
+        await product.save();
+
+        res.status(200).json({ message: 'nouveau produit créé' });
+
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: error.message });
+    }
+});
+
+
 module.exports = router;

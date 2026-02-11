@@ -17,6 +17,8 @@ import { DashboardBoutiqueComponent } from './components/dashboard-boutique/dash
 import { ListecategoryproduitComponent } from './components/categoryproduit/listecategoryproduit/listecategoryproduit.component';
 import { AddcategoryproduitComponent } from './components/categoryproduit/addcategoryproduit/addcategoryproduit.component';
 import { ListproduitComponent } from './components/product/listproduit/listproduit.component';
+import { AddproduitComponent } from './components/product/addproduit/addproduit.component';
+import { StockproduitComponent } from './components/product/stockproduit/stockproduit.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -30,7 +32,9 @@ const routes: Routes = [
   { path: 'cat-list', component: LsitCComponent },
   { path: 'catproduct-list', component: ListecategoryproduitComponent },
   { path: 'Listproduct', component: ListproduitComponent },
+  { path: 'stock', component: StockproduitComponent },
   { path: 'cat-add', component: AddCComponent },
+  { path: 'addproduct', component: AddproduitComponent },
   { path: 'cat-edit/:id', component: EditCComponent },
   { path: 'shop-list', component: ListSComponent },
   { path: 'addcatprod', component: AddcategoryproduitComponent },

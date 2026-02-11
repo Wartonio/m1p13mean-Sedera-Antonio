@@ -1,1 +1,63 @@
-<p>addproduit works!</p>
+<div class="container-fluid p-4">
+    <div class="d-flex align-items-center justify-content-between mb-4">
+        <h1 class="h3 mb-0 text-gray-800 fw-bold">Gestion des Catégories</h1>
+        <button (click)="redirectBack()" class="btn btn-sm btn-outline-secondary rounded-3">
+            <i class="bi bi-arrow-left me-1"></i> Retour à la liste
+        </button>
+    </div>
+
+    <div class="card shadow-sm border-0 rounded-4">
+        <div class="card-header bg-white border-0 py-3">
+            <h6 class="m-0 font-weight-bold text-primary">
+                <i class="bi bi-person-plus me-2"></i>Ajouter un nouvel catégorie
+            </h6>
+        </div>
+
+        <div class="card-body px-lg-5 py-4">
+            <form (ngSubmit)="insertproduct()">
+                <div class="row g-3">
+
+
+                    <div class="col-md-6">
+                        <label class="form-label small fw-bold text-muted">Designation</label>
+                        <input type="text" name="designation" [(ngModel)]="product.designation" class="form-control bg-light border-0 py-2" placeholder="Designation du produit">
+                    </div>
+
+                    <div class="col-md-6">
+                        <label class="form-label small fw-bold text-muted">Référence</label>
+                        <input type="text" name="ref" [(ngModel)]="product.reference" class="form-control bg-light border-0 py-2" placeholder="Reference du produit">
+                    </div>
+
+                    <div class="col-md-6">
+                        <label class="form-label small fw-bold text-muted">Categorie</label>
+                        <select class="form-control bg-light border-0 py-2" [(ngModel)]="product.category" name="category" placeholder="Selectionner la categorie du produit">
+                            <option *ngFor="let user of categoryproduct" [value]="user.ref">{{user.designation}}</option>
+                        </select>
+                    </div>
+
+                    <div class="col-md-6">
+                        <label class="form-label small fw-bold text-muted">Description</label>
+                        <input type="text" name="ref" [(ngModel)]="product.description" class="form-control bg-light border-0 py-2" placeholder="Ex: TECH">
+                    </div>
+
+                    <div class="col-md-6">
+                        <label class="form-label small fw-bold text-muted">Prix</label>
+                        <input type="text" name="ref" [(ngModel)]="product.price" class="form-control bg-light border-0 py-2" placeholder="Ex: TECH">
+                    </div>
+
+                    <div class="col-md-6">
+                        <label class="form-label small fw-bold text-muted">Image</label>
+                        <input type="text" name="ref" [(ngModel)]="product.image" class="form-control bg-light border-0 py-2" placeholder="Ex: TECH">
+                    </div>
+                    <div class="col-md-12 mt-4 text-end">
+                        <hr class="mb-4 text-muted opacity-25">
+                        <button type="button" class="btn btn-light px-4 me-2 rounded-3" (click)="redirectBack()">Annuler</button>
+                        <button type="submit" class="btn btn-primary px-5 rounded-3 fw-bold">
+                            <i class="bi bi-check-lg me-2"></i>Créer le catégorie
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
