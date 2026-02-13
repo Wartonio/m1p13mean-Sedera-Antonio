@@ -1,9 +1,9 @@
 <div class="container-fluid py-4">
     <div class="d-flex justify-content-between align-items-center mb-4">
         <h2>Gestion des produits</h2>
-        <!-- <button class="btn btn-primary" (click)="addproduct()" >
-            <i class="bi bi-person-plus-fill me-2"></i> Ajouter un produit
-        </button> -->
+        <button class="btn btn-primary" (click)="addstockproduct()" >
+            <i class="bi bi-person-plus-fill me-2"></i> Ajouter un stock produit
+        </button>
     </div>
 
     <div class="card shadow-sm border-0 rounded-4">
@@ -20,7 +20,8 @@
                     </thead>
                     <tbody>
                         <tr *ngFor="let user of stock">
-                            <td>{{ user.quantity }}</td>
+                            <td>{{ user.product.reference }}</td>
+                            <td>{{ user.product.designation }}</td>
                             <td>{{ user.quantity }}</td>
                             <td>{{ user.stockMin }}</td>
                             <td class="text-end">

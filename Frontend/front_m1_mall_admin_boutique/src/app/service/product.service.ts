@@ -16,6 +16,10 @@ export class ProductService {
     return this.http.get<Product[]>(`${this.apiUrl}/product/all`,this.getHttpOptions());
   }
 
+  getproductbyshop(shopid: string):Observable<Product[]> {
+    return this.http.get<Product[]>(`${this.apiUrl}/product/shop/${shopid}`,this.getHttpOptions());
+  }
+
   insertproduct(Util: Product): Observable<void>{
     return this.http.post<void>(`${this.apiUrl}/product/insertproduct`,Util,this.getHttpOptions());
   }

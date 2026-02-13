@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const Shop = require('./Shop');
 
 const productSchema = mongoose.Schema({
   designation: { type: String, required: true },
@@ -18,6 +19,11 @@ const productSchema = mongoose.Schema({
     type:Number,
     required:true
   },
+  shop: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Shop",
+      required: true
+    },
   createdAt: { type: Date, default: Date.now }
 });
 

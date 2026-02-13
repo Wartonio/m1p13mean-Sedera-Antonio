@@ -5,7 +5,7 @@ const stockSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: "Product",
     required: true,
-    unique: true // 1 produit = 1 stock+
+    unique: true 
   },
   quantity: {
     type: Number,
@@ -16,6 +16,11 @@ const stockSchema = new mongoose.Schema({
     type: Number,
     default: 5
   },
+  shop: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Shop",
+        required: true
+    },
   createdAt: { type: Date, default: Date.now }
 });
 

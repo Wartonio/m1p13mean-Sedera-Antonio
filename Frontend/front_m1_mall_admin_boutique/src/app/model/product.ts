@@ -7,4 +7,5 @@ export interface Product {
     status: string;
     image: string;
     price: number;
+    shop: string;
 }

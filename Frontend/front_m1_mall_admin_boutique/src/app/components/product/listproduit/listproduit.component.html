@@ -20,7 +20,9 @@
                         </tr>
                     </thead>
                     <tbody>
+                        
                         <tr *ngFor="let user of product">
+                            
                             <th scope="row"><img src="{{ user.image }}" ></th>
                             <td>{{ user.reference }}</td>
                             <td>{{ user.designation }}</td>
@@ -44,11 +46,13 @@
                 </table>
             </div>
             
+            
             <div *ngIf="product.length === 0" class="alert alert-info mt-4 text-center">
                 Aucun produit.
             </div>
         </div>
     </div>
 </div>
+
 
 
