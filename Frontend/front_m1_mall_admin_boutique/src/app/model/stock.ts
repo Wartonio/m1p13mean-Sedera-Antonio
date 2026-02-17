@@ -8,4 +8,5 @@ export interface Stock{
     quantity:number;
     stockMin:number;
     shop:string;
+    createdAt:string;
 }

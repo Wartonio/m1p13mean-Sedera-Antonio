@@ -15,7 +15,8 @@
                             <th scope="col">Ref°</th>
                             <th scope="col">Designation</th>
                             <th scope="col">Quantite</th>
-                            <th scope="col">Quantite min</th>
+                            <th scope="col">Quantite Minimale</th>
+                            <th scope="col">Date</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -24,6 +25,7 @@
                             <td>{{ user.product.designation }}</td>
                             <td>{{ user.quantity }}</td>
                             <td>{{ user.stockMin }}</td>
+                            <td>{{ user.createdAt | date:'dd/MM/yyyy HH:mm' }}</td>
                             <td class="text-end">
                                 <button class="btn btn-sm btn-outline-primary me-2"  title="Modifier">
                                     <i class="bi bi-pencil-square"></i>

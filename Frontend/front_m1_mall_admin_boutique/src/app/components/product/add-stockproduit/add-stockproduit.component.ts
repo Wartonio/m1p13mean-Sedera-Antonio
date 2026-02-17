@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
+import { switchMap } from 'rxjs';
 import { Product } from 'src/app/model/product';
 import { User } from 'src/app/model/user';
 import { ProductService } from 'src/app/service/product.service';
@@ -29,7 +30,8 @@ export class AddStockproduitComponent {
   product : Product[]=[];
 
   ngOnInit(){
-    this.getmed(); 
+    this.getmed();
+    this.getproductbyshop();
   }
 
   constructor(private router: Router,private productservice: ProductService,private stockservice: StockService, private userservice :UserService){}
@@ -42,6 +44,26 @@ export class AddStockproduitComponent {
         this.user = data;
         console.log(data);
         
+      }
+    );
+    }
+
+
+  getproductbyshop(){
+       this.userservice.getMe().pipe(
+      switchMap((user: User) => {
+        this.user = user;
+  
+        const shopId = user._id; 
+  
+        return this.productservice.getproductbyshop(shopId);
+      })
+      ).subscribe(
+      (products) => {
+        this.product = products;
+      },
+      (error) => {
+        console.error(error);
       }
     );
     }
@@ -102,7 +124,7 @@ export class AddStockproduitComponent {
 
   
   redirectBack(): void{
-    this.router.navigate(['/Listproduct']);
+    this.router.navigate(['/stock']);
   }
 
 
