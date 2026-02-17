@@ -53,6 +53,13 @@ app.use('/api/product',product);
 const stock =require('./routes/stock');
 app.use('/api/stock',stock);
 
+// //crud stock
+// const commande =require('./routes/commande');
+// app.use('/api/commande',commande);
+
+const commande = require('./routes/commande');
+app.use('/api/commande',commande)
+
 
 
 // Lancement du serveur
