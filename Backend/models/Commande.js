@@ -10,6 +10,11 @@ const commandeSchema = new mongoose.Schema({
     ref: "Product",
     required: true
   },
+  typelivraison: { 
+    type: String, 
+    enum: ['Livraison', 'Enlevement'], 
+    default: 'Enlevement' 
+  },
   quantity: {
     type: Number,
     required: true,
@@ -22,7 +27,12 @@ const commandeSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: "Shop",
         required: true
-    },
+   },
+   user:{
+    type: mongoose.Schema.Types.ObjectId,
+    ref:"User",
+    required: true
+   },
   createdAt: { type: Date, default: Date.now }
 });
 
