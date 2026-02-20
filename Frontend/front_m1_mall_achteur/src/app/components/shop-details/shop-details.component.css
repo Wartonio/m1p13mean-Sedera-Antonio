@@ -1,0 +1,22 @@
+.object-fit-cover {
+    object-fit: cover;
+}
+
+.product-card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border-radius: 12px;
+}
+
+.product-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.1) !important;
+}
+
+.shop-profile {
+    min-height: 100vh;
+    background-color: #f8f9fa;
+}
+
+.btn-dark:hover {
+    background-color: #333;
+}

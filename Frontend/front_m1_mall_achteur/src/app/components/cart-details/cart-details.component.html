@@ -1,0 +1,69 @@
+<div class="container py-5">
+    <div class="d-flex align-items-center mb-5">
+      <button (click)="goBack()" class="btn btn-icon-back me-3 shadow-sm">
+        <i class="pi pi-chevron-left"></i>
+      </button>
+      <h2 class="fw-bold m-0">Mon Panier <span class="text-muted fs-5">({{ cartItems.length }} articles)</span></h2>
+    </div>
+  
+    <div class="row g-4">
+      <div class="col-lg-8">
+        <div *ngIf="cartItems.length > 0; else emptyCart">
+          <div class="card mb-3 border-0 shadow-sm rounded-4 p-3 cart-item" *ngFor="let item of cartItems; let i = index">
+            <div class="d-flex align-items-center gap-3">
+              <div class="image-wrapper rounded-3 overflow-hidden" style="width: 100px; height: 100px;">
+                <img [src]="item.image" class="w-100 h-100 object-fit-cover" [alt]="item.name">
+              </div>
+  
+              <div class="flex-grow-1">
+                <div class="d-flex justify-content-between align-items-start">
+                  <div>
+                    <h5 class="fw-bold mb-1">{{ item.name }}</h5>
+                    <p class="text-muted small mb-0"><i class="pi pi-shop me-1"></i>{{ item.shopName }}</p>
+                  </div>
+                  <button (click)="removeItem(i)" class="btn btn-outline-danger border-0 rounded-circle">
+                    <i class="pi pi-trash"></i>
+                  </button>
+                </div>
+                <div class="mt-2 d-flex justify-content-between align-items-center">
+                  <span class="fw-bold fs-5 text-dark">{{ item.price | number:'1.0-0' }} Ar</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+  
+        <ng-template #emptyCart>
+          <div class="text-center py-5 bg-white rounded-4 shadow-sm">
+            <i class="pi pi-shopping-bag text-muted mb-3" style="font-size: 4rem; opacity: 0.2;"></i>
+            <h4 class="text-muted">Votre panier est vide</h4>
+            <button (click)="goBack()" class="btn btn-primary mt-3 rounded-pill px-4">Continuer le shopping</button>
+          </div>
+        </ng-template>
+      </div>
+  
+      <div class="col-lg-4" *ngIf="cartItems.length > 0">
+        <div class="card border-0 shadow-sm rounded-4 p-4 sticky-top" style="top: 20px;">
+          <h4 class="fw-bold mb-4">Résumé</h4>
+          
+          <div class="d-flex justify-content-between mb-3 text-muted">
+            <span>Sous-total</span>
+            <span>{{ totalPrice | number:'1.0-0' }} Ar</span>
+          </div>
+          <div class="d-flex justify-content-between mb-3 text-muted">
+            <span>Livraison</span>
+            <span class="text-success fw-bold">Gratuite</span>
+          </div>
+          <hr class="my-4">
+          <div class="d-flex justify-content-between align-items-center mb-4">
+            <span class="fw-bold fs-5">Total TTC</span>
+            <span class="fw-bold fs-3 text-primary">{{ totalPrice | number:'1.0-0' }} Ar</span>
+          </div>
+  
+          <button (click)="checkout()" class="btn btn-dark w-100 rounded-pill py-3 fw-bold shadow-sm">
+            Passer à la caisse
+          </button>
+        </div>
+      </div>
+    </div>
+</div>

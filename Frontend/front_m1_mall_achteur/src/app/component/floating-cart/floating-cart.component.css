@@ -1,0 +1,67 @@
+.floating-cart-container {
+    position: fixed;
+    top: 60px;
+    right: 300px;
+    z-index: 9999;
+    cursor: grab; /* Change le curseur en main pour indiquer qu'on peut attraper */
+    touch-action: none; /* Important pour que ça marche bien sur mobile */
+  }
+  
+  /* Style quand on est en train de déplacer */
+  .cdk-drag-dragging {
+    cursor: grabbing;
+    opacity: 0.8;
+    transform: scale(1.1);
+  }
+  .cart-badge {
+    position: absolute;
+    /* On le place en haut à droite du bouton */
+    top: -5px; 
+    right: -2px;
+    
+    /* Couleurs */
+    background: #ff4d4f; /* Rouge vif */
+    color: white;
+    
+    /* Taille et forme */
+    min-width: 22px; /* Assure un cercle parfait pour 1 chiffre */
+    height: 22px;
+    padding: 0 6px;
+    
+    /* Typographie */
+    font-size: 11px;
+    font-weight: 800; /* Plus gras pour la lisibilité */
+    font-family: sans-serif;
+    
+    /* Alignement du texte au centre du badge */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+    /* Finitions */
+    border-radius: 50px; /* Forme pilule si le nombre est grand */
+    border: 2px solid #000; /* Rappel du fond noir du bouton pour un effet creusé */
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    z-index: 10; /* Toujours au dessus de l'icône */
+}
+  
+  .btn-cart {
+    position: relative;
+    width: 65px;
+    height: 65px;
+    border-radius: 50%;
+    background: #000;
+    color: white;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+  }
+  
+  .drag-handle {
+      position: absolute;
+      left: 5px;
+      font-size: 10px;
+      opacity: 0.3;
+  }

@@ -1,0 +1,47 @@
+.object-fit-cover {
+    object-fit: cover;
+}
+
+.cart-item {
+    transition: transform 0.2s ease;
+}
+
+.cart-item:hover {
+    transform: translateX(5px);
+}
+
+.btn-icon-back {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    background: white;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #333;
+    transition: 0.3s;
+}
+
+.btn-icon-back:hover {
+    background: #000;
+    color: #fff;
+}
+
+.text-primary {
+    color: #000 !important; /* On reste sur un thème noir luxe */
+}
+
+.card {
+    border: none;
+}
+
+/* Animation de la liste */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.cart-item {
+    animation: fadeIn 0.3s ease forwards;
+}
