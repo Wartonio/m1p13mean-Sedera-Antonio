@@ -6,6 +6,8 @@ import { CheckboxModule } from 'primeng/checkbox';
 import { InputTextModule } from 'primeng/inputtext';
 import { PaginatorModule } from 'primeng/paginator';
 import { HttpClientModule } from '@angular/common/http';
+import { DragDropModule } from '@angular/cdk/drag-drop';
+import { CommonModule } from '@angular/common';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -16,6 +18,10 @@ import { TopbarComponent } from './component/topbar/topbar.component';
 import { HomeComponent } from './components/home/home.component';
 import { ProductComponent } from './components/product/product.component';
 import { ShopComponent } from './components/shop/shop.component';
+import { FloatingCartComponent } from './component/floating-cart/floating-cart.component';
+import { ProductDetailsComponent } from './components/product-details/product-details.component';
+import { ShopDetailsComponent } from './components/shop-details/shop-details.component';
+import { CartDetailsComponent } from './components/cart-details/cart-details.component';
 
 @NgModule({
   declarations: [
@@ -25,9 +31,14 @@ import { ShopComponent } from './components/shop/shop.component';
     LoginComponent,
     HomeComponent,
     ProductComponent,
-    ShopComponent
+    ShopComponent,
+    FloatingCartComponent,
+    ProductDetailsComponent,
+    ShopDetailsComponent,
+    CartDetailsComponent
   ],
   imports: [
+    DragDropModule,
     BrowserModule,
     AppRoutingModule,
     ButtonModule,      // Débloque <p-button>
@@ -35,7 +46,8 @@ import { ShopComponent } from './components/shop/shop.component';
     PaginatorModule, 
     InputTextModule,
     HttpClientModule,
-    FormsModule
+    FormsModule,
+    CommonModule
   ],
   providers: [],
   bootstrap: [AppComponent]

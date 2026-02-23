@@ -1,0 +1,50 @@
+<div class="container py-5" *ngIf="product">
+    <button class="btn btn-link text-dark p-0 mb-4 text-decoration-none" (click)="redirectBack()">
+      <i class="pi pi-arrow-left"></i> Retour
+    </button>
+  
+    <div class="row g-5">
+      <div class="col-md-6">
+        <div class="product-image-container shadow-sm rounded-4 overflow-hidden bg-white">
+          <img [src]="product?.image" [alt]="product?.name" class="img-fluid w-100">
+        </div>
+      </div>
+  
+      <div class="col-md-6">
+        <div class="ps-md-4">
+          <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+              <li class="breadcrumb-item"><a href="#">{{ product?.shopName }}</a></li>
+              <li class="breadcrumb-item active">{{ product?.category }}</li>
+            </ol>
+          </nav>
+  
+          <h1 class="display-5 fw-bold mb-3">{{ product?.name }}</h1>
+          
+          <div class="d-flex align-items-center mb-4">
+            <span class="fs-2 fw-bold text-primary">{{ product?.price | number:'1.0-0' }} Ar</span>
+            <span class="ms-3 badge bg-success-subtle text-success border border-success-subtle">En stock</span>
+          </div>
+  
+          <p class="text-muted mb-5 leading-relaxed">
+            Découvrez la qualité exceptionnelle de ce produit vendu par <strong>{{ product?.shopName }}</strong>. 
+            Un choix parfait pour allier style et performance au quotidien.
+          </p>
+  
+          <hr class="my-4 opacity-25">
+  
+          <div class="d-grid gap-3">
+            <button (click)="addToCart()" class="btn btn-dark btn-lg rounded-pill py-3 shadow-sm d-flex align-items-center justify-content-center gap-2">
+              <i class="pi pi-shopping-cart"></i>
+              Ajouter au panier
+            </button>
+            
+            <!-- <div class="d-flex align-items-center justify-content-center gap-4 mt-3 text-muted small">
+              <span><i class="pi pi-shield-check me-1"></i> Garantie 12 mois</span>
+              <span><i class="pi pi-truck me-1"></i> Livraison rapide</span>
+            </div> -->
+          </div>
+        </div>
+      </div>
+    </div>
+</div>

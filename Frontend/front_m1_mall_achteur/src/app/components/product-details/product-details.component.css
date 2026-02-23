@@ -1,0 +1,26 @@
+.product-image-container {
+    transition: transform 0.3s ease;
+    min-height: 400px;
+    display: flex;
+    align-items: center;
+}
+
+.product-image-container img {
+    object-fit: cover;
+    max-height: 600px;
+}
+
+.breadcrumb-item a {
+    text-decoration: none;
+    color: var(--bs-primary);
+    font-weight: 600;
+}
+
+.display-5 {
+    letter-spacing: -1px;
+}
+
+/* Style spécifique pour le badge Ar */
+.text-primary {
+    color: #000 !important; /* Pour un look plus luxe si vous préférez le noir */
+}

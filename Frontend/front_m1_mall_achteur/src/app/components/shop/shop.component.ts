@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 interface Shop {
   id: number;
@@ -51,6 +52,13 @@ export class ShopComponent implements OnInit {
     }
   ];
 
-  constructor() { }
+  constructor(
+    private router : Router
+  ) {}
+
   ngOnInit() { }
+
+  redirectDetails(id : number){
+    this.router.navigate(['shop-details',id]);
+  }
 }

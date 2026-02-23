@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { CartService } from 'src/app/service/cart.service';
+import { Location } from '@angular/common';
 interface Product {
   id: number;
   name: string;
@@ -9,22 +10,36 @@ interface Product {
   shopName: string;
   category: string;
 }
-
 @Component({
-  selector: 'app-product',
-  templateUrl: './product.component.html',
-  styleUrls: ['./product.component.css']
+  selector: 'app-product-details',
+  templateUrl: './product-details.component.html',
+  styleUrls: ['./product-details.component.css']
 })
-export class ProductComponent {
-  ngOnInit(){
+export class ProductDetailsComponent {
+  id = 0;
+  product : Product | null = null;
 
+  ngOnInit() {
+    this.route.params.subscribe(params => {
+      const productId = +params['id']; // Le '+' convertit la string en number
+      if (productId) {
+        this.product = this.products.find(p => p.id === productId) || null;
+
+        if (!this.product) {
+          this.router.navigate(['/product']);
+        }
+      }
+    });
   }
-
+  
+  
   constructor(
     private cartService : CartService,
-    private router : Router
+    private router : Router,    
+    private route: ActivatedRoute,
+    private location: Location
   ){}
-
+  
   products: Product[] = [
     {
       id: 1,
@@ -60,12 +75,18 @@ export class ProductComponent {
     }
   ];
 
-  viewDetails(id : number) {
-    this.router.navigate(['product-details',id])
+  addToCart() {
+    if (this.product) {
+      this.cartService.addToCart(this.product);
+      // Optionnel: Notification de succès ici
+    }
   }
-  addToCart(product: Product) {
-    this.cartService.addToCart(product);
-    console.log('Produit ajouté :', product.name);
-    // Logique pour ajouter au panier
+
+  redirectBack() {
+    if (window.history.length > 1) {
+      this.location.back();
+    } else {
+      this.router.navigate(['/shop']); // Chemin par défaut si aucun historique
+    }
   }
 }
