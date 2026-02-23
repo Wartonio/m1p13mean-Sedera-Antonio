@@ -15,6 +15,7 @@ router.get('/all', async (req, res) => {
 });
 
 const mongoose = require('mongoose');
+const multer = require('multer');
 
 router.get('/shop/:shopId', async (req, res) => {
   const { shopId } = req.params;
@@ -53,9 +54,86 @@ router.get('/shop/:shopId', async (req, res) => {
 //         res.status(500).json()
 //     }
 // // }
-router.post('/insertproduct', async (req, res) => {
+
+//configutation du multer
+// const storage = multer.diskStorage({
+//     destination:(req,file,cb)=>{
+//         cb:(null,'upload/products/');
+//     },
+//     filename:(req,file,cb) => {
+//         cb(null,Date.now() + '-' + file.originalname);
+//     }
+// });
+
+// const storage = multer.diskStorage({
+//     destination: (req, file, cb) => {
+//         cb(null, 'upload/products/');
+//     },
+//     filename: (req, file, cb) => {
+//         cb(null, Date.now());
+//     }
+// });
+
+const path = require('path');
+
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, 'upload/products');
+  },
+  filename: function (req, file, cb) {
+    const ext = path.extname(file.originalname);
+    cb(null, Date.now() + ext);
+  }
+});
+
+
+
+
+
+
+const upload =multer({
+    storage,
+    limits:{ fileSize: 2* 1024 * 1024},
+    fileFilter:(req,file,cb)=>{
+        if(file.mimetype.startsWith('image/')){
+            cb(null,true);
+        }
+        else{
+            cb(new Error('Image seulement'));
+        }
+    }
+});
+
+// router.post('/insertproduct',upload.single('image'),async (req, res) => {
+//     try {
+//         const { designation, reference, category, description,price,shop } = req.body;
+
+//         const product = new Product({
+//             designation,
+//             reference,
+//             category,
+//             description,
+//             price,
+//             shop,
+//             image:req.file.filename
+//         });
+
+//         await product.save();
+
+//         res.status(200).json({ message: 'nouveau produit créé' });
+
+//     } catch (error) {
+//         console.error(error);
+//         res.status(500).json({ error: error.message });
+//     }
+// });
+
+router.post('/insertproduct', upload.single('image'), async (req, res) => {
     try {
-        const { designation, reference, category, description,price, image,shop } = req.body;
+
+           console.log(req.file); // vérifier le fichier
+    console.log(req.body);
+        const { designation, reference, category, description, price, shop } = req.body;
 
         const product = new Product({
             designation,
@@ -63,8 +141,8 @@ router.post('/insertproduct', async (req, res) => {
             category,
             description,
             price,
-            image,
-            shop
+            shop,
+            image: req.file ? req.file.filename : null
         });
 
         await product.save();

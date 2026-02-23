@@ -1,10 +1,13 @@
 <div class="container-fluid py-4">
     <div class="d-flex justify-content-between align-items-center mb-4">
-        <h2>Gestion des produits</h2>
+        <h2>Gestion des Stocks produits</h2>
         <button class="btn btn-primary" (click)="addstockproduct()" >
             <i class="bi bi-person-plus-fill me-2"></i> Ajouter un stock produit
         </button>
     </div>
+        <a  (click)="Historiquestockproduct()" >
+            <i class="bi bi-person-plus-fill me-1"></i> Historique un stock produit
+        </a>
 
     <div class="card shadow-sm border-0 rounded-4">
         <div class="card-body p-4">
@@ -19,20 +22,7 @@
                             <th scope="col">Date</th>
                         </tr>
                     </thead>
-                    <tbody>
-                        <tr *ngFor="let user of stock">
-                            <td>{{ user.product.reference }}</td>
-                            <td>{{ user.product.designation }}</td>
-                            <td>{{ user.quantity }}</td>
-                            <td>{{ user.stockMin }}</td>
-                            <td>{{ user.createdAt | date:'dd/MM/yyyy HH:mm' }}</td>
-                            <td class="text-end">
-                                <button class="btn btn-sm btn-outline-primary me-2"  title="Modifier">
-                                    <i class="bi bi-pencil-square"></i>
-                                </button>
-                            </td>
-                        </tr>
-                    </tbody>
+                    
                 </table>
             </div>
             

@@ -63,5 +63,9 @@ export class StockproduitComponent {
     this.router.navigate(['/addstock']);
   }
 
+  Historiquestockproduct(): void{
+    this.router.navigate(['/historique']);
+  }
+
      
 }

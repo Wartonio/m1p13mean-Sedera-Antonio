@@ -24,6 +24,10 @@ export class ProductService {
     return this.http.post<void>(`${this.apiUrl}/product/insertproduct`,Util,this.getHttpOptions());
   }
 
+  insertproductimage(formData: FormData): Observable<any>{
+    return this.http.post(`${this.apiUrl}/product/insertproduct`,formData);
+  }
+
   private getHttpOptions() {
         const token = localStorage.getItem('jwtToken');
         return {

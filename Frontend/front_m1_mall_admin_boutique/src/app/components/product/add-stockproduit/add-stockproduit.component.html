@@ -20,26 +20,23 @@
                 <div class="row g-3">
 
 
-                    <!-- <div class="col-md-6">
-                        <label class="form-label small fw-bold text-muted">Produit</label>
-                        <input type="text" name="designation" [(ngModel)]="stocks.product" class="form-control bg-light border-0 py-2" placeholder="Designation du produit">
-                    </div> -->
-
-                    <div class="col-md-6">
-                        <label class="form-label small fw-bold text-muted">Quantite</label>
-                        <input type="text" name="ref" [(ngModel)]="stocks.quantity" class="form-control bg-light border-0 py-2" placeholder="Reference du produit">
-                    </div>
-
-                    <div class="col-md-6">
+                    <div class="col-md-12">
                         <label class="form-label small fw-bold text-muted">Produit</label>
                         <select class="form-control bg-light border-0 py-2" [(ngModel)]="stocks.product" name="product" placeholder="Selectionner du produit">
                             <option *ngFor="let user of product" [value]="user._id">{{user.designation}}</option>
                         </select>
                     </div>
 
-                    <div class="col-md-6">
+                    <div class="col-md-12">
+                        <label class="form-label small fw-bold text-muted">Quantite</label>
+                        <input type="Number" name="ref" [(ngModel)]="stocks.quantity" class="form-control bg-light border-0 py-2" placeholder="Reference du produit">
+                    </div>
+
+
+
+                    <div class="col-md-12">
                         <label class="form-label small fw-bold text-muted">Stock minimum</label>
-                        <input type="text" name="stockMin" [(ngModel)]="stocks.stockMin" class="form-control bg-light border-0 py-2" placeholder="Ex: TECH">
+                        <input type="Number" name="stockMin" [(ngModel)]="stocks.stockMin" class="form-control bg-light border-0 py-2" placeholder="Ex: TECH">
                     </div>
 
 

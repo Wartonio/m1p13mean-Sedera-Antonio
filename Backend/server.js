@@ -61,6 +61,8 @@ const commande = require('./routes/commande');
 app.use('/api/commande',commande)
 
 
+app.use('/upload', express.static('upload'));
+
 
 // Lancement du serveur
 const PORT = process.env.PORT || 3000;
