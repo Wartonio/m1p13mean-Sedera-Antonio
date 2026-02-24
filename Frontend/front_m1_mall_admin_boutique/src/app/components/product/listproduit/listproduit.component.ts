@@ -20,7 +20,7 @@ export class ListproduitComponent {
   user!: User;
 
   ngOnInit(){
-    this.getproductbyshop();
+    this.getproductbyshoppage();
     this.getmed();
   }
 
@@ -33,6 +33,8 @@ export class ListproduitComponent {
   //     }
   //   )
   // }
+
+  
 
   getproductbyshop(){
      this.userservice.getMe().pipe(
@@ -52,6 +54,52 @@ export class ListproduitComponent {
     }
   );
   }
+
+
+
+currentPage = 1;
+totalPages = 0;
+limit = 5; // nombre de produits par page
+
+getproductbyshoppage() {
+  this.userservice.getMe().pipe(
+    switchMap((user: User) => {
+      this.user = user;
+      const shopId = user._id;
+
+      // Appel au service avec pagination
+      return this.productservice.getProductByShoppage(
+        shopId,
+        this.currentPage,
+        this.limit
+      );
+    })
+  ).subscribe(
+    (res) => {
+      this.product = res.data;        // tableau de produits
+      this.currentPage = res.currentPage;
+      this.totalPages = res.totalPages;
+    },
+    (error) => {
+      console.error(error);
+    }
+  );
+}
+
+// Pagination
+nextPage() {
+  if (this.currentPage < this.totalPages) {
+    this.currentPage++;
+    this.getproductbyshop();
+  }
+}
+
+prevPage() {
+  if (this.currentPage > 1) {
+    this.currentPage--;
+    this.getproductbyshop();
+  }
+}
 
 
 

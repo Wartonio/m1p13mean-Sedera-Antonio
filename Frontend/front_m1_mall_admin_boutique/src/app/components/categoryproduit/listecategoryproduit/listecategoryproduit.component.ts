@@ -31,4 +31,8 @@ export class ListecategoryproduitComponent {
     this.router.navigate(['/addcatprod']);
   }
 
+  editCategory(id : string): void {
+    this.router.navigate(['/catprod-edit',id]);
+  }
+
 }

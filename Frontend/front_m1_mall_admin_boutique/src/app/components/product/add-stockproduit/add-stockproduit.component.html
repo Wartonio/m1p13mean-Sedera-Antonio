@@ -1,20 +1,12 @@
 <div class="container-fluid p-4">
     <div class="d-flex align-items-center justify-content-between mb-4">
-        <h1 class="h3 mb-0 text-gray-800 fw-bold">Gestion des Catégories</h1>
+        <h1 class="h3 mb-0 text-gray-800 fw-bold">Gestion du stock produit</h1>
         <button (click)="redirectBack()" class="btn btn-sm btn-outline-secondary rounded-3">
             <i class="bi bi-arrow-left me-1"></i> Retour à la liste
         </button>
     </div>
 
-    <div class="card shadow-sm border-0 rounded-4">
-        <div class="card-header bg-white border-0 py-3">
-            <h6 class="m-0 font-weight-bold text-primary">
-                <i class="bi bi-person-plus me-2"></i>Ajouter un nouvel produit
-            </h6>
-    </div>
-        
-
-
+    <div class="card shadow-sm border-0 rounded-4"> 
         <div class="card-body px-lg-5 py-4">
             <form (ngSubmit)="insertstockproduct()">
                 <div class="row g-3">
@@ -22,19 +14,19 @@
 
                     <div class="col-md-12">
                         <label class="form-label small fw-bold text-muted">Produit</label>
-                        <select class="form-control bg-light border-0 py-2" [(ngModel)]="stocks.product" name="product" placeholder="Selectionner du produit">
+                        <select class="form-select bg-light border-0 py-2" [(ngModel)]="stocks.product" name="product" placeholder="Selectionner du produit">
                             <option *ngFor="let user of product" [value]="user._id">{{user.designation}}</option>
                         </select>
                     </div>
 
-                    <div class="col-md-12">
+                    <div class="col-md-6">
                         <label class="form-label small fw-bold text-muted">Quantite</label>
                         <input type="Number" name="ref" [(ngModel)]="stocks.quantity" class="form-control bg-light border-0 py-2" placeholder="Reference du produit">
                     </div>
 
 
 
-                    <div class="col-md-12">
+                    <div class="col-md-6">
                         <label class="form-label small fw-bold text-muted">Stock minimum</label>
                         <input type="Number" name="stockMin" [(ngModel)]="stocks.stockMin" class="form-control bg-light border-0 py-2" placeholder="Ex: TECH">
                     </div>
@@ -46,7 +38,7 @@
                         <hr class="mb-4 text-muted opacity-25">
                         <button type="button" class="btn btn-light px-4 me-2 rounded-3" (click)="redirectBack()">Annuler</button>
                         <button type="submit" class="btn btn-primary px-5 rounded-3 fw-bold">
-                            <i class="bi bi-check-lg me-2"></i>Créer le catégorie
+                            <i class="bi bi-check-lg me-2"></i>Ajout de stock
                         </button>
                     </div>
                 </div>

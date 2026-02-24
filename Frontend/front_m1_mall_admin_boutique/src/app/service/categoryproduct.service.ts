@@ -13,11 +13,18 @@ export class CategoryproductService {
 
   getListcategorieproduct():Observable<Categoryproduct[]>{
     return this.http.get<Categoryproduct[]>(`${this.apiUrl}/categoryproduct/all`,this.getHttpOptions());
-
   }
 
   insertcategoryproduct(Util: Categoryproduct): Observable<void>{
     return this.http.post<void>(`${this.apiUrl}/categoryproduct/insertcategoryproduct`,Util,this.getHttpOptions());
+  }
+
+  updateCategoryproduct(util: Categoryproduct) : Observable<void>{
+      return this.http.patch<void>(`${this.apiUrl}/categoryproduct/update`,util,this.getHttpOptions());
+  }
+
+  getone(id:string):Observable<Categoryproduct>{
+    return this.http.get<Categoryproduct>(`${this.apiUrl}/categoryproduct/One/${id}`,this.getHttpOptions());
   }
 
   private getHttpOptions() {
