@@ -32,7 +32,7 @@ router.get('/all',  async (req, res) => {
 //   }
 // });
 
-router.get('/:shopId', async (req, res) => {
+router.get('/shop/:shopId', async (req, res) => {
   const { shopId } = req.params;
 
   if (!mongoose.Types.ObjectId.isValid(shopId)) {
@@ -78,4 +78,23 @@ router.post('/insertstock', async (req, res) => {
   }
 });
 
+
+router.get('/products-view/:shopId', async (req, res) => {
+    const { shopId } = req.params;
+
+  if (!mongoose.Types.ObjectId.isValid(shopId)) {
+    return res.status(400).json({ error: 'Invalid shopId format' });
+  }
+
+   try {
+      const data = await mongoose.connection.db
+         .collection('Stockfinal')
+         .find({ shop: new mongoose.Types.ObjectId(shopId) })
+         .toArray();
+
+      res.json(data);
+   } catch (error) {
+      res.status(500).json({ error: error.message });
+   }
+});
 module.exports = router;

@@ -16,37 +16,51 @@ import { UserService } from 'src/app/service/user.service';
 })
 export class StockproduitComponent {
    stock: Stock[]=[];
+   stocks: any[] =[];
 
   constructor(private router: Router,private stockservice: StockService,private userservice :UserService){}
 
   ngOnInit(){
-    this.getstockbyshop();
+    this.loadStock();
+    
   }
 
-  // getAllstockproduct(){
-  //     this.stockservice.getListStock().subscribe(
-  //       (data : Stock[])=>{
-  //         this.stock =data;
-  //       }
-  //     )
-  // }
+  
  
-  getstockbyshop(){
-    this.userservice.getMe().pipe(
-        switchMap((user: User) => {
-          this.user = user;
+  // getstockbyshop(){
+  //   this.userservice.getMe().pipe(
+  //       switchMap((user: User) => {
+  //         this.user = user;
     
-          const shopId = user._id; 
-          return this.stockservice.getstockproductbyshop(shopId);
-        })).subscribe(
-          (stocks) => {
-              this.stock = stocks;
-          },
-    (error) => {
-      console.error(error);
-    }
-        );
-  }
+  //         const shopId = user._id; 
+  //         return this.stockservice.getstockproductbyshop(shopId);
+  //       })).subscribe(
+  //         (stocks) => {
+  //             this.stock = stocks;
+  //         },
+  //   (error) => {
+  //     console.error(error);
+  //   }
+  //       );
+  // }
+
+loadStock() {
+  this.userservice.getMe().pipe(
+    switchMap((user: User) =>{
+      this.user = user;
+      const shopid = user._id; // ⚠ vérifier si c’est bien shop ou user
+      return this.stockservice.getstockcommande(shopid);
+    })
+  ).subscribe({
+      next: (data) => {
+        console.log("DATA API :", data); // 👈 ajoute ça
+        this.stocks = data;
+      },
+      error: (err) => {
+        console.error(err);
+      }
+    });
+}
 
 
 

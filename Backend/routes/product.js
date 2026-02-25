@@ -17,6 +17,16 @@ router.get('/all', async (req, res) => {
   }
 });
 
+router.get('/One/:id', async (req,res) => {
+  try {
+    const productid=req.params.id;
+    const product = await Product.findOne({_id:productid});
+    res.status(200).json(category);
+  } catch (error) {
+    res.status(500).json({error: "Erreur lors de la recuperation du product"});
+  }
+} );
+
 
 // find product by shop
 router.get('/shops/:shopId', async (req, res) => {
@@ -131,6 +141,8 @@ router.post('/insertproduct', upload.single('image'), async (req, res) => {
         res.status(500).json({ error: error.message });
     }
 });
+
+
 
 
 module.exports = router;

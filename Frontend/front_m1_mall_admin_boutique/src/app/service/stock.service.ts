@@ -25,7 +25,11 @@ export class StockService {
   }
 
   getstockproductbyshop(shopid: string):Observable<Stock[]> {
-      return this.http.get<Stock[]>(`${this.apiUrl}/stock/${shopid}`,this.getHttpOptions());
+      return this.http.get<Stock[]>(`${this.apiUrl}/stock/shop/${shopid}`,this.getHttpOptions());
+  }
+
+  getstockcommande(shopid: string){
+     return this.http.get<any[]>(`${this.apiUrl}/stock/products-view/${shopid}`,this.getHttpOptions());
   }
 
   private getHttpOptions() {

@@ -19,10 +19,10 @@ interface StatCard {
 })
 export class DashboardBoutiqueComponent implements OnInit, AfterViewInit{
   stats: StatCard[] = [
-    { title: 'Messages', value: '152', icon: 'bi-envelope', iconClass: 'icon-cyan', trendValue: '24 nouveaux', trendLabel: 'depuis la visite' },
-    { title: 'Check-ins', value: '532', icon: 'bi-geo-alt', iconClass: 'icon-orange', trendValue: '48 nouveaux', trendLabel: 'depuis la visite' },
-    { title: 'Files Synced', value: '28,441', icon: 'bi-file-earmark-check', iconClass: 'icon-slate', footerLabel: '32,56 / 250 GB utilisé' },
-    { title: 'Users Online', value: '25,660', icon: 'bi-people', iconClass: 'icon-violet', trendValue: '72 nouveaux', trendLabel: 'cette semaine' }
+    { title: 'Produits', value: '152', icon: 'bi-envelope', iconClass: 'icon-cyan', trendValue: '24 nouveaux', trendLabel: 'depuis la visite' },
+    { title: 'Catégorie produit', value: '532', icon: 'bi-geo-alt', iconClass: 'icon-orange', trendValue: '48 nouveaux', trendLabel: 'depuis la visite' },
+    { title: 'Nombre de commandes', value: '28,441', icon: 'bi-file-earmark-check', iconClass: 'icon-slate', footerLabel: '32,56 / 250 GB utilisé' },
+    { title: 'Chiffre d affaire', value: '25,660', icon: 'bi-people', iconClass: 'icon-violet', trendValue: '72 nouveaux', trendLabel: 'cette semaine' }
   ];
 
   recentActivities = [

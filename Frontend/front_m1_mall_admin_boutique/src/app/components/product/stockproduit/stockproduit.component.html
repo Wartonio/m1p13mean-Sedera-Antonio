@@ -15,17 +15,24 @@
                 <table class="table table-hover align-middle mb-0">
                     <thead class="bg-light">
                         <tr>
-                            <th scope="col">Ref°</th>
                             <th scope="col">Designation</th>
+                            <th scope="col">Reference</th>
                             <th scope="col">Quantite</th>
                             <th scope="col">Quantite disponible</th>
                         </tr>
                     </thead>
-                    
+                        <tbody>
+      <tr *ngFor="let item of stocks">
+        <td>{{ item.designation }}</td>
+        <td>{{ item.reference }}</td>
+        <td>{{ item.totalCommande }}</td>
+        <td>{{ item.stockDisponible }}</td>
+      </tr>
+    </tbody>
                 </table>
             </div>
             
-            <div *ngIf="stock.length === 0" class="alert alert-info mt-4 text-center">
+            <div *ngIf="stocks.length === 0" class="alert alert-info mt-4 text-center">
                 Aucun produit.
             </div>
         </div>
