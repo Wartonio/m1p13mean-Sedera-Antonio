@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
+import { switchMap } from 'rxjs';
 import { Categoryproduct } from 'src/app/model/categoryproduct';
 import { User } from 'src/app/model/user';
 import { CategoryService } from 'src/app/service/category.service';
@@ -32,7 +33,7 @@ export class AddproductComponent {
   };
 
   ngOnInit(){
-    this.getAllcategoryproduct(); 
+    this.getcategoryproductbyshop(); 
     this.getmed(); 
   }
 
@@ -107,12 +108,24 @@ export class AddproductComponent {
   categoryproduct : Categoryproduct[]=[];
   
 
-  getAllcategoryproduct(){
-      this.categoryproductservice.getListcategorieproduct().subscribe(
-        (data : Categoryproduct[])=>{
-          this.categoryproduct = data;
-        }
-      )
+ 
+  getcategoryproductbyshop(){
+       this.userservice.getMe().pipe(
+      switchMap((user: User) => {
+        this.user = user;
+  
+        const shopId = user._id; 
+  
+        return this.categoryproductservice.getproductbyshop(shopId);
+      })
+      ).subscribe(
+      (categoryproducts) => {
+        this.categoryproduct = categoryproducts;
+      },
+      (error) => {
+        console.error(error);
+      }
+    );
     }
 
     redirectBack(): void{

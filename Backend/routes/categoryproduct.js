@@ -4,6 +4,7 @@ const bcrypt = require('bcrypt');
 const auth = require('../middleware/auth');
 const Category = require('../models/Category');
 const Categoryproduct = require('../models/Categoryproduct');
+const mongoose = require('mongoose');
 
 
 router.get('/all', async (req, res) => {
@@ -28,11 +29,12 @@ router.get('/all', async (req, res) => {
 
 router.post('/insertcategoryproduct',  async (req, res) => {
     try {
-      const { ref,designation } = req.body;
+      const { ref,designation,shop } = req.body;
   
       const categoryproduct = new Categoryproduct({
             ref,
-            designation
+            designation,
+            shop
         });
   
       await categoryproduct.save();
@@ -70,6 +72,23 @@ router.get('/One/:id', async (req, res) => {
       res.status(200).json(category);
   } catch (error) {
       res.status(500).json({ error: "Erreur lors de la récupération duCategory" });
+  }
+});
+
+router.get('/shop/:shopId', async (req, res) => {
+  const { shopId } = req.params;
+
+  if (!mongoose.Types.ObjectId.isValid(shopId)) {
+    return res.status(400).json({ error: 'Invalid shopId format' });
+  }
+
+  try {
+    const categoryproduct = await Categoryproduct.find({ shop: new mongoose.Types.ObjectId(shopId) })
+                                  .sort({ createdAt: -1 });
+    res.status(200).json(categoryproduct);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Erreur lors de la récupération category product" });
   }
 });
 

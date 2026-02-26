@@ -15,6 +15,10 @@ export class CategoryproductService {
     return this.http.get<Categoryproduct[]>(`${this.apiUrl}/categoryproduct/all`,this.getHttpOptions());
   }
 
+  getproductbyshop(shopid: string):Observable<Categoryproduct[]> {
+      return this.http.get<Categoryproduct[]>(`${this.apiUrl}/categoryproduct/shop/${shopid}`,this.getHttpOptions());
+  }
+
   insertcategoryproduct(Util: Categoryproduct): Observable<void>{
     return this.http.post<void>(`${this.apiUrl}/categoryproduct/insertcategoryproduct`,Util,this.getHttpOptions());
   }

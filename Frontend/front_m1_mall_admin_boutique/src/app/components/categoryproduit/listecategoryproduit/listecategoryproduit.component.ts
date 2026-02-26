@@ -1,8 +1,11 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { switchMap } from 'rxjs';
 import { Categoryproduct } from 'src/app/model/categoryproduct';
+import { User } from 'src/app/model/user';
 import { CategoryproductService } from 'src/app/service/categoryproduct.service';
+import { UserService } from 'src/app/service/user.service';
 
 @Component({
   selector: 'app-listecategoryproduit',
@@ -14,18 +17,37 @@ import { CategoryproductService } from 'src/app/service/categoryproduct.service'
 export class ListecategoryproduitComponent {
   categoryproduct : Categoryproduct[]=[];
   ngOnInit(){
-    this.getAllcategoryproduct();  
+    this.getcategoryproductbyshop();  
   }
 
-  constructor(private router: Router,private categoryproductservice: CategoryproductService){}
+  constructor(private router: Router,private categoryproductservice: CategoryproductService,private userservice:  UserService){}
 
-  getAllcategoryproduct(){
-    this.categoryproductservice.getListcategorieproduct().subscribe(
-      (data : Categoryproduct[])=>{
-        this.categoryproduct = data;
+  // getAllcategoryproduct(){
+  //   this.categoryproductservice.getListcategorieproduct().subscribe(
+  //     (data : Categoryproduct[])=>{
+  //       this.categoryproduct = data;
+  //     }
+  //   )
+  // }
+  user!: User;
+  getcategoryproductbyshop(){
+       this.userservice.getMe().pipe(
+      switchMap((user: User) => {
+        this.user = user;
+  
+        const shopId = user._id; 
+  
+        return this.categoryproductservice.getproductbyshop(shopId);
+      })
+      ).subscribe(
+      (categoryproducts) => {
+        this.categoryproduct = categoryproducts;
+      },
+      (error) => {
+        console.error(error);
       }
-    )
-  }
+    );
+    }
 
   addcategoryproduct(): void {
     this.router.navigate(['/addcatprod']);

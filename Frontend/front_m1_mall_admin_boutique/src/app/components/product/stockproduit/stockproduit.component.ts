@@ -48,12 +48,12 @@ loadStock() {
   this.userservice.getMe().pipe(
     switchMap((user: User) =>{
       this.user = user;
-      const shopid = user._id; // ⚠ vérifier si c’est bien shop ou user
+      const shopid = user._id; 
       return this.stockservice.getstockcommande(shopid);
     })
   ).subscribe({
       next: (data) => {
-        console.log("DATA API :", data); // 👈 ajoute ça
+        console.log("DATA API :", data); 
         this.stocks = data;
       },
       error: (err) => {
