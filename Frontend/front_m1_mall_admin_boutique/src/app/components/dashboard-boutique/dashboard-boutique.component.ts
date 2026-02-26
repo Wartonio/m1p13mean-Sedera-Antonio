@@ -1,6 +1,12 @@
 import { Component, OnInit, AfterViewInit, PLATFORM_ID, Inject } from '@angular/core';
 import { CommonModule, isPlatformBrowser } from '@angular/common'; // Import indispensable
 import Chart from 'chart.js/auto';
+import { Router } from '@angular/router';
+import { ProductService } from 'src/app/service/product.service';
+import { UserService } from 'src/app/service/user.service';
+import { User } from 'src/app/model/user';
+import { Product } from 'src/app/model/product';
+import { switchMap } from 'rxjs';
 interface StatCard {
   title: string;
   value: string;
@@ -18,12 +24,48 @@ interface StatCard {
   styleUrl: './dashboard-boutique.component.css'
 })
 export class DashboardBoutiqueComponent implements OnInit, AfterViewInit{
-  stats: StatCard[] = [
-    { title: 'Produits', value: '152', icon: 'bi-envelope', iconClass: 'icon-cyan', trendValue: '24 nouveaux', trendLabel: 'depuis la visite' },
-    { title: 'Catégorie produit', value: '532', icon: 'bi-geo-alt', iconClass: 'icon-orange', trendValue: '48 nouveaux', trendLabel: 'depuis la visite' },
-    { title: 'Nombre de commandes', value: '28,441', icon: 'bi-file-earmark-check', iconClass: 'icon-slate', footerLabel: '32,56 / 250 GB utilisé' },
-    { title: 'Chiffre d affaire', value: '25,660', icon: 'bi-people', iconClass: 'icon-violet', trendValue: '72 nouveaux', trendLabel: 'cette semaine' }
-  ];
+
+   product: Product[]=[];
+
+    getproductbyshop(){
+       this.userservice.getMe().pipe(
+      switchMap((user: User) => {
+        this.user = user;
+  
+        const shopId = user._id; 
+  
+        return this.productservice.getproductbyshop(shopId);
+      })
+      ).subscribe(
+      (products) => {
+        this.product = products;
+        this.stats[0].value = products.length.toString();
+      },
+      (error) => {
+        console.error(error);
+      }
+    );
+    }
+
+
+  user!: User;
+
+    getmed(){
+    this.userservice.getMe().subscribe(
+      (data: User) => {
+        this.user = data;
+        
+      }
+    );
+    }
+
+
+stats: StatCard[] = [
+  { title: 'Produits', value: '0', icon: 'bi-envelope', iconClass: 'icon-cyan', trendValue: '24 nouveaux', trendLabel: 'depuis la visite' },
+  { title: 'Catégorie produit', value: '532', icon: 'bi-geo-alt', iconClass: 'icon-orange', trendValue: '48 nouveaux', trendLabel: 'depuis la visite' },
+  { title: 'Nombre de commandes', value: '28,441', icon: 'bi-file-earmark-check', iconClass: 'icon-slate', footerLabel: '32,56 / 250 GB utilisé' },
+  { title: 'Chiffre d affaire', value: '25,660', icon: 'bi-people', iconClass: 'icon-violet', trendValue: '72 nouveaux', trendLabel: 'cette semaine' }
+];
 
   recentActivities = [
     { id: 1, task: 'Mise à jour système', time: 'Il y a 2 min', status: 'bg-primary' },
@@ -32,7 +74,7 @@ export class DashboardBoutiqueComponent implements OnInit, AfterViewInit{
     { id: 4, task: 'Erreur serveur corrigée', time: 'Il y a 3h', status: 'bg-danger' }
   ];
 
-  constructor(@Inject(PLATFORM_ID) private platformId: Object) {}
+  constructor(@Inject(PLATFORM_ID) private platformId: Object,private router: Router,private productservice: ProductService, private userservice :UserService) {}
 
   ngOnInit(): void {}
 
@@ -41,6 +83,7 @@ export class DashboardBoutiqueComponent implements OnInit, AfterViewInit{
       this.createChart();
     }
   }
+ 
 
   createChart() {
     const ctx = document.getElementById('myChart') as HTMLCanvasElement;
