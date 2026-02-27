@@ -65,7 +65,7 @@ stats: StatCard[] = [
   { title: 'Catégorie produit', value: '532', icon: 'bi-geo-alt', iconClass: 'icon-orange', trendValue: '48 nouveaux', trendLabel: 'depuis la visite' },
   { title: 'Nombre de commandes', value: '28,441', icon: 'bi-file-earmark-check', iconClass: 'icon-slate', footerLabel: '32,56 / 250 GB utilisé' },
   { title: 'Chiffre d affaire', value: '25,660', icon: 'bi-people', iconClass: 'icon-violet', trendValue: '72 nouveaux', trendLabel: 'cette semaine' }
-];
+]; 
 
   recentActivities = [
     { id: 1, task: 'Mise à jour système', time: 'Il y a 2 min', status: 'bg-primary' },

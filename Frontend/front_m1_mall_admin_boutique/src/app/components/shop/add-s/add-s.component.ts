@@ -33,6 +33,11 @@ export class AddSComponent {
     this.getAllRoles();
   }
 
+    onFileSelected(event: any){
+    this.selectedFile= event.target.files[0];
+  }
+
+
   constructor(
     private router: Router,
     private categoryService : CategoryService,
@@ -47,9 +52,26 @@ export class AddSComponent {
     )
   }
 
+  selectedFile!: File;
+
   insertshop() {
+      if (!this.selectedFile) {
+          alert('Veuillez sélectionner une image !');
+          return;
+        }
     this.isLoading = true;
-    this.shopService.insertShop(this.shop).subscribe({
+
+    const formData =new FormData();
+    formData.append('nom',this.shop.nom);
+    formData.append('category',this.shop.category);
+    formData.append('localisation',this.shop.localisation);
+    formData.append('heureOuveture',this.shop.heureOuveture);
+    formData.append('heureFermeture',this.shop.heureFermeture);
+    formData.append('journal',this.shop.journal);
+    formData.append('remarque',this.shop.remarque);
+    formData.append('status',this.shop.status);
+    formData.append('image', this.selectedFile);
+    this.shopService.insertShop(formData).subscribe({
       next: () => {
         this.redirectBack();
         Swal.fire({

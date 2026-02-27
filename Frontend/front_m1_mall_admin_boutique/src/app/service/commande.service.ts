@@ -19,6 +19,10 @@ export class CommandeService {
   getcommandebyshop(shopid: string):Observable<Commande[]> {
       return this.http.get<Commande[]>(`${this.apiUrl}/commande/${shopid}`,this.getHttpOptions());
   }
+
+  insertcommande(Util: Commande): Observable<void>{
+      return this.http.post<void>(`${this.apiUrl}/commande/insertcommande`,Util,this.getHttpOptions());
+  }
   
   private getHttpOptions() {
       const token = localStorage.getItem('jwtToken');

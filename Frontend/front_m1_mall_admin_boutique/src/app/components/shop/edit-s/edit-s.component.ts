@@ -26,7 +26,8 @@ export class EditSComponent {
     heureFermeture: '',
     journal: '',
     remarque: '',
-    status: ''
+    status: '',
+  image: ''
   };
   categories : Category[]=[];
   isLoading = false;
@@ -71,7 +72,8 @@ export class EditSComponent {
           heureFermeture: o.heureFermeture ?? '',
           journal: o.journal ?? '',
           remarque: o.remarque ?? '',
-          status: o.status ?? ''
+          status: o.status ?? '',
+          image: o.image ?? '' 
         };
       },
       error: () => {

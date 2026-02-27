@@ -75,6 +75,10 @@
                       
                         </select>
                     </div>
+                    <div class="col-md-12">
+                        <label class="form-label small fw-bold text-muted">Image <span class="text-danger">*</span></label>
+                         <input type="file" (change)="onFileSelected($event)" accept="image/*" class="form-control bg-light border-0 py-2" required>
+                    </div>
 
                     <div class="col-md-12 mt-4 text-end">
                         <hr class="mb-4 text-muted opacity-25">

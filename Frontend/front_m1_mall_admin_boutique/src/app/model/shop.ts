@@ -8,4 +8,5 @@ export interface Shop {
     journal: string;
     remarque: string;
     status: string;
+    image:string;
 }

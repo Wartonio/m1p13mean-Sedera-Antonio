@@ -8,6 +8,10 @@ const shopSchema = mongoose.Schema({
   heureFermeture : { type: String, required: true },
   journal: { type: String, required: true },
   remarque: { type: String, required: true },
+    image:{
+    type:String,
+    required:true
+  },
   status: { 
     type: String, 
     enum: ['active', 'inactive'], 

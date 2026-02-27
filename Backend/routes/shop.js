@@ -2,6 +2,8 @@ const express = require('express');
 const router = express.Router();
 const auth = require('../middleware/auth');
 const Shop = require('../models/Shop');
+const multer = require('multer');
+const path = require('path');
 
 router.get('/all', auth, async (req, res) => {
   try {
@@ -56,7 +58,36 @@ router.get('/one/:id', auth, async (req, res) => {
   }
 });
 
-router.post('/insert', auth, async (req, res) => {
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, 'upload/products');
+  },
+  filename: function (req, file, cb) {
+    const ext = path.extname(file.originalname);
+    cb(null, Date.now() + ext);
+  }
+});
+
+
+
+
+
+
+const upload =multer({
+    storage,
+    limits:{ fileSize: 2* 1024 * 1024},
+    fileFilter:(req,file,cb)=>{
+        if(file.mimetype.startsWith('image/')){
+            cb(null,true);
+        }
+        else{
+            cb(new Error('Image seulement'));
+        }
+    }
+});
+
+
+router.post('/insert',auth,upload.single('image'),  async (req, res) => {
     try {
       const { nom, category, localisation,status, heureOuveture,heureFermeture,journal,remarque} = req.body;
   
@@ -69,6 +100,7 @@ router.post('/insert', auth, async (req, res) => {
             heureFermeture,
             journal,
             remarque,
+            image: req.file ? req.file.filename : null,
             createdAt: new Date()
         });
   

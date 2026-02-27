@@ -36,8 +36,8 @@ export class ShopService {
     return this.http.get<Shop>(`${this.apiUrl}/shop/one/${id}`,this.getHttpOptions());
   }
   
-  insertShop(util: Shop) : Observable<void>{
-    return this.http.post<void>(`${this.apiUrl}/shop/insert`,util,this.getHttpOptions());
+  insertShop(formData: FormData) : Observable<any>{
+    return this.http.post(`${this.apiUrl}/shop/insert`,formData,this.getAuthHeader());
   }
   
   updateShop(util: Shop) : Observable<void>{
@@ -53,4 +53,13 @@ export class ShopService {
         })
         };
     }
+
+    private getAuthHeader() {
+    const token = localStorage.getItem('jwtToken');
+    return {
+        headers: new HttpHeaders({
+            'Authorization': `Bearer ${token}`
+        })
+    };
+}
 }

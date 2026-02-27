@@ -40,4 +40,50 @@ router.get('/:shopId', async (req, res) => {
   }
 });
 
+
+router.post('/insertcommande', async (req, res) => {
+  try {
+
+    const { product, typelivraison, quantity, pricetotal, shop, user } = req.body;
+
+    // 📅 Date actuelle
+    const now = new Date();
+    const year = now.getFullYear();
+    const month = String(now.getMonth() + 1).padStart(2, '0');
+
+    // 📅 Début du mois
+    const startOfMonth = new Date(year, now.getMonth(), 1);
+    const endOfMonth = new Date(year, now.getMonth() + 1, 1);
+
+    // 🔢 Compter les commandes du mois
+    const count = await Commande.countDocuments({
+      createdAt: { $gte: startOfMonth, $lt: endOfMonth }
+    });
+
+    const sequence = String(count + 1).padStart(5, '0');
+
+    const referencecommande = `C-${year}-${month}-${sequence}`;
+
+    const commande = new Commande({
+      referencecommande,
+      product,
+      typelivraison,
+      quantity,
+      pricetotal,
+      shop,
+      user
+    });
+
+    await commande.save();
+
+    res.status(200).json({
+      message: 'nouvelle commande créée',
+      reference: referencecommande
+    });
+
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: error.message });
+  }
+});
 module.exports = router;
