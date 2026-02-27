@@ -31,7 +31,7 @@ import { CartDetailsComponent } from './components/cart-details/cart-details.com
     LoginComponent,
     HomeComponent,
     ProductComponent,
-    ShopComponent,
+    // ShopComponent,
     FloatingCartComponent,
     ProductDetailsComponent,
     ShopDetailsComponent,
