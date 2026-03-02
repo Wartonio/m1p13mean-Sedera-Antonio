@@ -2,16 +2,11 @@ import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { catchError, of, switchMap } from 'rxjs';
 import { Product } from 'src/app/model/product';
+import { Shop } from 'src/app/model/shop';
 import { CartService } from 'src/app/service/cart.service';
 import { ProductService } from 'src/app/service/product.service';
-interface Shop {
-  id: number;
-  name: string;
-  image: string;
-  location: string;    // Nouvelle propriété
-  category: string;    // Secteur d'activité
-  description: string; // Petit texte d'accroche
-}
+import { ShopService } from 'src/app/service/shop.service';
+
 
 @Component({
   selector: 'app-shop-details',
@@ -19,59 +14,29 @@ interface Shop {
   styleUrls: ['./shop-details.component.css']
 })
 export class ShopDetailsComponent {
-  id = 0;
-  shop : Shop | null = null;
-  productShop : Product []=[];
+  shop?: Shop;
   product: Product[]=[];
 
   constructor(
     private cartService : CartService,
     private router : Router,
     private route : ActivatedRoute,
-    private productService: ProductService
+    private productService: ProductService,
+    private shopservice: ShopService
   ){}
 
-  // ngOnInit() {
-  //   this.route.params.subscribe(params => {
-  //     const shopId = +params['id']; 
-  //     if (shopId) {
-  //       // 1. Trouver la boutique correspondante
-  //       this.shop = this.shops.find(s => s.id === shopId) || null;
-        
-  //       // 2. Filtrer les produits appartenant à cette boutique
-  //       if (this.shop) {
-  //         this.productShop = this.products.filter(p => p.shopName === this.shop?.name);
-  //       } else {
-  //         this.router.navigate(['/shop']);
-  //       }
-  //     }
-  //   });
-  // }
+
 
 
   loading = true;
 
-// getProductsByShop(shopId: string): void {
-//   this.loading = true;
-
-//   this.productService.getproductbyshop(shopId).subscribe({
-//     next: (data) => {
-//       this.product = data;
-//       this.loading = false;
-//     },
-//     error: (err) => {
-//       console.error(err);
-//       this.loading = false;
-//     }
-//   });
-// }
 
   ngOnInit(): void {
     // Récupérer shopId depuis l'URL et appeler la fonction externe
     this.route.paramMap
       .pipe(
         switchMap(params => {
-          const shopId = params.get('shopId');
+          const shopId = params.get('id');
           if (shopId) {
             return this.getProductsByShop(shopId); // fonction qui retourne un Observable
           }
@@ -87,6 +52,21 @@ export class ShopDetailsComponent {
           console.error('Erreur lors du chargement des produits :', err);
         }
       });
+
+      const id = this.route.snapshot.paramMap.get('id');
+
+      if (id) {
+        this.shopservice.getOne(id).subscribe({
+          next: (data) => {
+            this.shop = data;
+            this.loading = false;
+          },
+          error: (err) => {
+            console.error(err);
+            this.loading = false;
+          }
+        });
+      }
   }
 
   // Fonction externe pour récupérer les produits
@@ -108,13 +88,17 @@ export class ShopDetailsComponent {
   }
 
 
+
+
   redirectBack(){
     this.router.navigate(['shop']);
   }
 
-  detailsProduct(id : number){
+  viewDetails(id : string){
     this.router.navigate(['product-details',id]);
   }
+
+
 
   // addToCart(product: Product) {
   //   this.cartService.addToCart(product);
