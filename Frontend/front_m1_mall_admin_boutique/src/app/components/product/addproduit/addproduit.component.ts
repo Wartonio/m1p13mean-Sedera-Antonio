@@ -26,7 +26,8 @@ export class AddproduitComponent {
     price:0,
     status:'',
     image:'',
-    shop:''
+    shop:'',
+    shopId:''
   };
   isLoading = false;
 
@@ -43,6 +44,7 @@ insertproduct(): void {
   if (this.user) {
     // Mettre le shop du user connecté dans le produit
     this.product.shop = this.user._id;
+    // this.product.shopId=this.user.boutiqueId;
     console.log(this.product.shop);  // ou this.user.shop si c’est l’ID du shop
   } else {
     console.error('Utilisateur non chargé, impossible de récupérer le shop');
@@ -54,6 +56,18 @@ insertproduct(): void {
     this.isLoading = false;
     return;
   }
+  if (this.user.boutiqueId) {
+  this.product.shopId = this.user.boutiqueId;
+} else {
+  console.error('Boutique ID manquant pour l’utilisateur');
+  Swal.fire({
+    icon: 'error',
+    title: 'Erreur',
+    text: 'Impossible de récupérer le shop de l’utilisateur'
+  });
+  this.isLoading = false;
+  return;
+}
 
   console.log('Produit envoyé au backend :', this.product);
 

@@ -7,6 +7,9 @@ export interface Product {
     status: string;
     image: string;
     price: number;
-    shop: string;
-    shopId:string;
+    shop:string;
+    shopId: {
+    _id: string;
+    nom: string;
+    };
 }

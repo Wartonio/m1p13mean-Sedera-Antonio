@@ -98,4 +98,9 @@ constructor(
       error: (err) => console.error("Erreur chargement", err)
     });
   }
+
+
+  viewDetails(id : string) {
+    this.router.navigate(['shop-details',id])
+  }
 }

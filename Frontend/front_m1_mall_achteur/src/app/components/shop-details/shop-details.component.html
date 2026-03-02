@@ -1,4 +1,4 @@
-<div class="shop-profile" *ngIf="shop">
+<!-- <div class="shop-profile" *ngIf="shop">
     <div class="bg-dark text-white py-5 mb-5 shadow-sm" 
          [style.background]="'linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url(' + shop.image + ')'"
          style="background-size: cover; background-position: center; min-height: 300px; display: flex; align-items: center;">
@@ -26,7 +26,7 @@
         <div class="border-bottom flex-grow-1 ms-4 opacity-25"></div>
       </div>
   
-      <div class="row g-4" *ngIf="productShop.length > 0; else noProducts">
+      <div class="row g-4" *ngIf="product.length > 0; else noProducts">
         <div class="col-12 col-md-6 col-lg-3" *ngFor="let p of productShop">
           <div class="card h-100 border-0 shadow-sm product-card">
             <div class="position-relative overflow-hidden bg-light" style="height: 200px;">
@@ -38,10 +38,10 @@
               <div class="text-primary fw-bold fs-5">{{ p.price | number:'1.0-0' }} Ar</div>
             </div>
             <div class="card-footer bg-transparent border-0 p-3 pt-0 d-flex gap-2">
-              <button (click)="detailsProduct(p.id)" class="btn btn-outline-dark btn-sm flex-grow-1 rounded-pill">
+              <button  class="btn btn-outline-dark btn-sm flex-grow-1 rounded-pill">
                 Détails
               </button>
-              <button (click)="addToCart(p)" class="btn btn-dark btn-sm rounded-circle p-2" title="Ajouter au panier">
+              <button  class="btn btn-dark btn-sm rounded-circle p-2" title="Ajouter au panier">
                 <i class="pi pi-shopping-cart"></i>
               </button>
             </div>
@@ -56,4 +56,15 @@
         </div>
       </ng-template>
     </div>
-</div>
+</div> -->
+
+<h2>Produits de la boutique</h2>
+<ul>
+  <li *ngFor="let p of product">
+    {{ p.designation }} - {{ p.category }} - {{ p.description }}
+    <button >Voir Détails</button>
+  </li>
+</ul>
+
+<!-- Afficher un message si pas de produit -->
+<p *ngIf="product.length === 0 && !loading">Aucun produit disponible pour cette boutique.</p>

@@ -29,7 +29,8 @@ export class AddproductComponent {
     description: '',
     status:'',
     price: 0,
-    shop: ''
+    shop: '',
+    shopId:''
   };
 
   ngOnInit(){
@@ -57,14 +58,14 @@ export class AddproductComponent {
       alert('Veuillez sélectionner une image !');
       return;
     }
-    if (!this.user) {
+  if (!this.user || !this.user.boutiqueId) {
     Swal.fire({
       icon: 'error',
       title: 'Erreur',
-      text: 'Utilisateur non connecté'
+      text: 'Utilisateur non connecté ou boutique manquante'
     });
     return;
-    }
+  }
     
 
     this.isLoading = true;
@@ -78,6 +79,7 @@ export class AddproductComponent {
     formData.append('price', this.product.price.toString());
     formData.append('status', this.product.status);
     formData.append('shop', this.user._id);
+    formData.append('shopId',this.user.boutiqueId);
     formData.append('image', this.selectedFile);
 
 

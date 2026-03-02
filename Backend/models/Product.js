@@ -21,10 +21,15 @@ const productSchema = mongoose.Schema({
   },
   shop: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "Shop",
+      ref: "User",
       required: true
     },
-  createdAt: { type: Date, default: Date.now }
+  createdAt: { type: Date, default: Date.now },
+  shopId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Shop",
+      required: true
+    }
 });
 
 module.exports = mongoose.model('Product', productSchema);

@@ -9,7 +9,9 @@ const path = require('path');
 
 router.get('/all', async (req, res) => {
   try {
-      const products = await Product.find().sort({ createdAt: -1 });    
+      const products = await Product.find()
+        .populate('shopId', 'nom')
+        .sort({ createdAt: -1 });    
       res.status(200).json(products);
   } catch (error) {
     console.error(error);
@@ -20,9 +22,23 @@ router.get('/all', async (req, res) => {
 router.get('/One/:id', async (req,res) => {
   try {
     const productid=req.params.id;
-    const product = await Product.findOne({_id:productid});
-    res.status(200).json(category);
+    const product = await Product.findOne({_id:productid})
+    .populate('shopId', 'nom');
+    res.status(200).json(product);
   } catch (error) {
+    console.error("Erreur MongoDB:", error);
+    res.status(500).json({error: "Erreur lors de la recuperation du product"});
+  }
+} );
+
+router.get('/productshop/:id', async (req,res) => {
+  try {
+    const shopid=req.params.id;
+    const product = await Product.find({shopId:shopid})
+    .populate('shopId', 'nom');
+    res.status(200).json(product);
+  } catch (error) {
+    console.error("Erreur MongoDB:", error);
     res.status(500).json({error: "Erreur lors de la recuperation du product"});
   }
 } );
@@ -120,7 +136,7 @@ router.post('/insertproduct', upload.single('image'), async (req, res) => {
 
            console.log(req.file);
     console.log(req.body);
-        const { designation, reference, category, description, price, shop } = req.body;
+        const { designation, reference, category, description, price, shop,shopId } = req.body;
 
         const product = new Product({
             designation,
@@ -129,6 +145,7 @@ router.post('/insertproduct', upload.single('image'), async (req, res) => {
             description,
             price,
             shop,
+            shopId,
             image: req.file ? req.file.filename : null
         });
 
