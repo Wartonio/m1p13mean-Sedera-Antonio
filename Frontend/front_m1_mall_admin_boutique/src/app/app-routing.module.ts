@@ -24,6 +24,7 @@ import { ListecommandeComponent } from './components/commande/listecommande/list
 import { HistoriquestockproduitComponent } from './components/product/historiquestockproduit/historiquestockproduit.component';
 import { AddproductComponent } from './components/products/addproduct/addproduct.component';
 import { EditcategoryproduitComponent } from './components/categoryproduit/editcategoryproduit/editcategoryproduit.component';
+import { EditproductComponent } from './components/products/editproduct/editproduct.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -44,6 +45,7 @@ const routes: Routes = [
   { path: 'cat-add', component: AddCComponent },
   { path: 'addproduct', component: AddproductComponent },
   { path: 'cat-edit/:id', component: EditCComponent },
+  { path:'prod-edit/:id',component: EditproductComponent},
   { path:'catprod-edit/:id',component: EditcategoryproduitComponent},
   { path: 'shop-list', component: ListSComponent },
   { path: 'addcatprod', component: AddcategoryproduitComponent },

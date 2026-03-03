@@ -1,0 +1,115 @@
+<div class="container mt-4" *ngIf="product">
+
+  <h3 class="mb-4">Modifier Produit</h3>
+
+  <form (ngSubmit)="update()">
+
+    <!-- Designation -->
+    <div class="mb-3">
+      <label class="form-label">Désignation</label>
+      <input
+        type="text"
+        class="form-control"
+        [(ngModel)]="product.designation"
+        name="designation"
+        required>
+    </div>
+
+    <!-- Reference -->
+    <div class="mb-3">
+      <label class="form-label">Référence</label>
+      <input
+        type="text"
+        class="form-control"
+        [(ngModel)]="product.reference"
+        name="reference"
+        required>
+    </div>
+
+    <!-- Category -->
+    <div class="mb-3">
+      <label class="form-label">Catégorie</label>
+      <select
+        class="form-select"
+        [(ngModel)]="product.category"
+        name="category"
+        required>
+        <option *ngFor="let cat of categoryproduct" [value]="cat.designation">
+          {{ cat.designation }}
+        </option>
+      </select>
+    </div>
+
+    <!-- Description -->
+    <div class="mb-3">
+      <label class="form-label">Description</label>
+      <textarea
+        class="form-control"
+        rows="3"
+        [(ngModel)]="product.description"
+        name="description">
+      </textarea>
+    </div>
+
+    <!-- Status -->
+    <div class="mb-3">
+      <label class="form-label">Status</label>
+      <select
+        class="form-select"
+        [(ngModel)]="product.status"
+        name="status">
+        <option value="active">Active</option>
+        <option value="inactive">Inactive</option>
+      </select>
+    </div>
+
+    <!-- Price -->
+    <div class="mb-3">
+      <label class="form-label">Prix</label>
+      <input
+        type="number"
+        class="form-control"
+        [(ngModel)]="product.price"
+        name="price"
+        required>
+    </div>
+
+    <!-- Image (non modifiable) -->
+    <div class="mb-3">
+      <label class="form-label">Image</label>
+      <input
+        type="text"
+        class="form-control"
+        [(ngModel)]="product.image"
+        name="image"
+        disabled>
+    </div>
+
+    <!-- Shop (non modifiable) -->
+    <div class="mb-3">
+      <label class="form-label">Shop</label>
+      <input
+        type="text"
+        class="form-control"
+        [(ngModel)]="product.shop"
+        name="shop"
+        disabled>
+    </div>
+
+    <!-- ShopId (non modifiable) -->
+    <div class="mb-3">
+      <label class="form-label">Shop ID</label>
+      <input
+        type="text"
+        class="form-control"
+        [(ngModel)]="product.shopId"
+        name="shopId"
+        disabled>
+    </div>
+
+    <button type="submit" class="btn btn-primary">
+      Mettre à jour
+    </button>
+
+  </form>
+</div>

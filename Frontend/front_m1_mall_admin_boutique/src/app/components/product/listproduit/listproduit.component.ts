@@ -117,4 +117,8 @@ prevPage() {
     this.router.navigate(['/addproduct']);
   }
 
+  editCategory(id : string): void {
+    this.router.navigate(['/prod-edit',id]);
+  }
+
 }

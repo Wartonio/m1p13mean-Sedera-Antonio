@@ -13,12 +13,20 @@ export class ProductService {
 
   constructor(private http: HttpClient) { }
 
+    updateShop(util: Product) : Observable<void>{
+      return this.http.patch<void>(`${this.apiUrl}/product/update`,util,this.getHttpOptions());
+    }
+
   getListproduct(): Observable<Product[]>{
     return this.http.get<Product[]>(`${this.apiUrl}/product/all`,this.getHttpOptions());
   }
 
   getproductbyshop(shopid: string):Observable<Product[]> {
     return this.http.get<Product[]>(`${this.apiUrl}/product/shops/${shopid}`,this.getHttpOptions());
+  }
+
+  getProductById(id: string): Observable<Product> {
+    return this.http.get<Product>(`${this.apiUrl}/product/One/${id}`);
   }
 
   getProductByShoppage(

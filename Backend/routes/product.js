@@ -6,10 +6,29 @@ const mongoose = require('mongoose');
 const multer = require('multer');
 const path = require('path');
 
+router.patch('/update', auth, async (req, res) => {
+    try {
+      let updateData = { ...req.body };
+  
+      const updatedUser = await Product.findByIdAndUpdate(
+        req.body._id,
+        { $set: updateData },
+        { new: true, runValidators: true }
+      );
+  
+      if (!updatedUser) return res.status(404).json({ error: 'Product non trouvé' });
+  
+      res.status(200).json({ message: 'Boutique mis à jour !', user: updatedUser });
+    } catch (error) {
+      console.error(error);
+      res.status(400).json({ error: 'Erreur lors de la mise à jour' });
+    }
+});
+
 
 router.get('/all', async (req, res) => {
   try {
-      const products = await Product.find()
+      const products = await Product.find({status :"active"})
         .populate('shopId', 'nom')
         .sort({ createdAt: -1 });    
       res.status(200).json(products);
