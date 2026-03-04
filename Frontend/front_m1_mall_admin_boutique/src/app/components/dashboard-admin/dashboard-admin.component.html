@@ -26,30 +26,6 @@
         </div>
     </div>
 
-    <div class="row g-4">
-        <div class="col-lg-8">
-            <div class="card border-0 shadow-sm p-4 rounded-4 h-100">
-                <h5 class="fw-bold mb-4">Flux d'activité</h5>
-                <div style="height: 300px;">
-                    <canvas id="myChart"></canvas>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-lg-4">
-            <div class="card border-0 shadow-sm p-4 rounded-4 h-100">
-                <h5 class="fw-bold mb-4">Notifications</h5>
-                <div class="activity-list">
-                    <div class="d-flex align-items-start mb-4" *ngFor="let act of recentActivities">
-                        <div [class]="'mt-1 p-1 rounded-circle me-3 ' + act.status" style="width: 10px; height: 10px;"></div>
-                        <div>
-                            <p class="mb-0 fw-semibold small text-dark">{{ act.task }}</p>
-                            <small class="text-muted">{{ act.time }}</small>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+    
 
 </div>

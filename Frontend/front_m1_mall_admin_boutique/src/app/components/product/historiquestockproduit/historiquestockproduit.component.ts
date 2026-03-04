@@ -22,14 +22,7 @@ export class HistoriquestockproduitComponent {
     ngOnInit(){
       this.getstockbyshop();
     }
-  
-    // getAllstockproduct(){
-    //     this.stockservice.getListStock().subscribe(
-    //       (data : Stock[])=>{
-    //         this.stock =data;
-    //       }
-    //     )
-    // }
+
    
     getstockbyshop(){
       this.userservice.getMe().pipe(

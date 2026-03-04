@@ -1,6 +1,14 @@
 import { Component, OnInit, AfterViewInit, PLATFORM_ID, Inject } from '@angular/core';
 import { CommonModule, isPlatformBrowser } from '@angular/common'; // Import indispensable
 import Chart from 'chart.js/auto';
+import { User } from 'src/app/model/user';
+import { UserService } from 'src/app/service/user.service';
+import { CategoryService } from 'src/app/service/category.service';
+import { Category } from 'src/app/model/category';
+import { ShopService } from 'src/app/service/shop.service';
+import { Shop } from 'src/app/model/shop';
+import { ProductService } from 'src/app/service/product.service';
+import { Product } from 'src/app/model/product';
 
 interface StatCard {
   title: string;
@@ -20,12 +28,13 @@ interface StatCard {
   styleUrl: './dashboard-admin.component.css'
 })
 export class DashboardAdminComponent implements OnInit, AfterViewInit {
+
+  categories : Category[]=[];
   
   stats: StatCard[] = [
-    { title: 'Messages', value: '152', icon: 'bi-envelope', iconClass: 'icon-cyan', trendValue: '24 nouveaux', trendLabel: 'depuis la visite' },
-    { title: 'Check-ins', value: '532', icon: 'bi-geo-alt', iconClass: 'icon-orange', trendValue: '48 nouveaux', trendLabel: 'depuis la visite' },
-    { title: 'Files Synced', value: '28,441', icon: 'bi-file-earmark-check', iconClass: 'icon-slate', footerLabel: '32,56 / 250 GB utilisé' },
-    { title: 'Users Online', value: '25,660', icon: 'bi-people', iconClass: 'icon-violet', trendValue: '72 nouveaux', trendLabel: 'cette semaine' }
+    { title: 'Categories Boutique', value: '152', icon: 'bi-envelope', iconClass: 'icon-cyan', trendValue: '24 nouveaux', trendLabel: 'depuis la visite' },
+    { title: 'Boutiques', value: '532', icon: 'bi-geo-alt', iconClass: 'icon-orange', trendValue: '48 nouveaux', trendLabel: 'depuis la visite' },
+    { title: 'Utilisateurs', value: '532', icon: 'bi-geo-alt', iconClass: 'icon-orange', trendValue: '48 nouveaux', trendLabel: 'depuis la visite' }
   ];
 
   recentActivities = [
@@ -35,9 +44,83 @@ export class DashboardAdminComponent implements OnInit, AfterViewInit {
     { id: 4, task: 'Erreur serveur corrigée', time: 'Il y a 3h', status: 'bg-danger' }
   ];
 
-  constructor(@Inject(PLATFORM_ID) private platformId: Object) {}
+  constructor(@Inject(PLATFORM_ID) private platformId: Object,private userservice: UserService,
+      private roleService : CategoryService,private shopService:  ShopService,private productservice: ProductService
+    ){}
 
-  ngOnInit(): void {}
+      currentPage: number = 1;
+  totalPages: number = 1;
+  limit: number = 10;
+  search: string = '';
+  shops: Shop[] = [];
+  totalShops: number = 0;
+
+    getAllShop(){
+    this.shopService.getShops(this.currentPage, this.limit, this.search).subscribe({
+      next: (data) => {
+        this.shops = data.shops;
+        this.totalPages = data.totalPages;
+        this.totalShops = data.total;
+        this.stats[1].value = data.total.toString();        // total global
+     
+      },
+      error: (err) => console.error("Erreur chargement", err)
+    });
+  }
+
+
+  totalUsers: number = 0;
+  users: any[] = [];
+
+    getAllUser(){
+    this.userservice.getUsers(this.currentPage, this.limit, this.search).subscribe({
+      next: (data) => {
+        this.users = data.users;
+        this.totalPages = data.totalPages;
+        this.totalUsers = data.total;
+        this.stats[2].value = data.total.toString(); 
+      },
+      error: (err) => console.error("Erreur chargement", err)
+    });
+  }
+  
+    getAllCategories(){
+      this.roleService.getListCategorys().subscribe(
+        (data : Category[])=> {
+          this.categories = data;
+          this.stats[0].value = data.length.toString();
+        }
+      )
+    }
+   user!: User;
+  
+      getmed(){
+      this.userservice.getMe().subscribe(
+        (data: User) => {
+          this.user = data;
+          
+        }
+      );
+      }
+
+      product: Product[]=[];
+
+          getAllproduct(){
+    this.productservice.getListproduct().subscribe(
+      (data : Product[])=>{
+        this.product =data;
+        this.stats[1].value = data.length.toString();
+      console.log(data);
+      }
+    )
+  }
+
+  ngOnInit(): void {
+    this.getAllCategories();
+    this.getAllShop();
+    this.getAllproduct();
+    this.getAllUser();
+  }
 
   ngAfterViewInit(): void {
     if (isPlatformBrowser(this.platformId)) {

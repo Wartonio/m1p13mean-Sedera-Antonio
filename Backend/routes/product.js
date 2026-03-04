@@ -53,7 +53,7 @@ router.get('/One/:id', async (req,res) => {
 router.get('/productshop/:id', async (req,res) => {
   try {
     const shopid=req.params.id;
-    const product = await Product.find({shopId:shopid})
+    const product = await Product.find({shopId:shopid,status: "active"})
     .populate('shopId', 'nom');
     res.status(200).json(product);
   } catch (error) {
@@ -72,7 +72,7 @@ router.get('/shops/:shopId', async (req, res) => {
   }
 
   try {
-    const products = await Product.find({ shop: new mongoose.Types.ObjectId(shopId) })
+    const products = await Product.find({ shop: new mongoose.Types.ObjectId(shopId)})
                                   .sort({ createdAt: -1 });
     res.status(200).json(products);
   } catch (error) {
