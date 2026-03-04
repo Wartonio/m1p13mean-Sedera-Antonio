@@ -3,6 +3,7 @@ import { CartService } from 'src/app/service/cart.service';
 import { Router } from '@angular/router';
 import { User } from 'src/app/model/user';
 import { UserService } from 'src/app/service/user.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-cart-details',
@@ -116,8 +117,12 @@ checkout(): void {
     });
 
   });
-
-  alert("Commandes envoyées avec succès !");
+    Swal.fire({
+        icon: 'success',
+        title: 'Succès',
+      text: 'Commandes envoyés'
+    });
+    
   this.cartService.updateCart([]);
   this.router.navigate(['/shop']);
 }
