@@ -4,6 +4,7 @@ import { CartService } from 'src/app/service/cart.service';
 import { Location } from '@angular/common';
 import { Product } from 'src/app/model/product';
 import { ProductService } from 'src/app/service/product.service';
+import { environment } from '../env/config';
 
 @Component({
   selector: 'app-product-details',
@@ -13,6 +14,9 @@ import { ProductService } from 'src/app/service/product.service';
 export class ProductDetailsComponent {
   loading = true;
   product?: Product;
+
+
+    apiUrl = environment.apiUrl;
 
  ngOnInit(): void {
     const id = this.route.snapshot.paramMap.get('id');

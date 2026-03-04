@@ -4,6 +4,7 @@ import { Product } from 'src/app/model/product';
 import { CartService } from 'src/app/service/cart.service';
 import { ProductService } from 'src/app/service/product.service';
 import { UserService } from 'src/app/service/user.service';
+import { environment } from '../env/config';
 
 
 @Component({
@@ -13,6 +14,8 @@ import { UserService } from 'src/app/service/user.service';
 })
 export class ProductComponent {
   product: Product[]=[];
+
+  apiUrl = environment.apiUrl;
 
   ngOnInit(){
       this.getAllproduct();

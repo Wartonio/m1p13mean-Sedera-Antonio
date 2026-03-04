@@ -6,6 +6,7 @@ import { Product } from 'src/app/model/product';
 import { User } from 'src/app/model/user';
 import { ProductService } from 'src/app/service/product.service';
 import { UserService } from 'src/app/service/user.service';
+import { environment } from '../../env/config';
 
 @Component({
   selector: 'app-listproduit',
@@ -120,5 +121,7 @@ prevPage() {
   editCategory(id : string): void {
     this.router.navigate(['/prod-edit',id]);
   }
+
+  apiUrl = environment.apiUrl;
 
 }

@@ -6,6 +6,7 @@ import { Shop } from 'src/app/model/shop';
 import { CartService } from 'src/app/service/cart.service';
 import { ProductService } from 'src/app/service/product.service';
 import { ShopService } from 'src/app/service/shop.service';
+import { environment } from '../env/config';
 
 
 @Component({
@@ -16,6 +17,8 @@ import { ShopService } from 'src/app/service/shop.service';
 export class ShopDetailsComponent {
   shop?: Shop;
   product: Product[]=[];
+
+  apiUrl = environment.apiUrl;
 
   constructor(
     private cartService : CartService,

@@ -7,6 +7,7 @@ import { ShopService } from 'src/app/service/shop.service';
 import { Subject } from 'rxjs';
 import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 import Swal from 'sweetalert2';
+import { environment } from '../../env/config';
 
 @Component({
   selector: 'app-list-s',
@@ -24,6 +25,8 @@ export class ListSComponent {
   shops: Shop[] = [];
   newStatus ='';
   private searchSubject = new Subject<string>();
+
+  apiUrl = environment.apiUrl;
 
   constructor(
     private router: Router,

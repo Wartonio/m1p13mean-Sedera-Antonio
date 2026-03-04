@@ -1,6 +1,6 @@
 <div class="shop-profile" *ngIf="shop">
     <div class="bg-dark text-white py-5 mb-5 shadow-sm"
-         [style.background]="'linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url(http://localhost:3000/upload/shops/' + shop.image + ')'"
+         [style.background]="'linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url(apiUrl + /upload/shops/' + shop.image + ')'"
          style="background-size: cover; background-position: center; min-height: 300px; display: flex; align-items: center;">
       <div class="container">
         <button (click)="redirectBack()" class="btn btn-sm btn-outline-light mb-4 rounded-pill">
@@ -30,7 +30,7 @@
         <div class="col-12 col-md-6 col-lg-3" *ngFor="let p of product">
           <div class="card h-100 border-0 shadow-sm product-card">
             <div class="position-relative overflow-hidden bg-light" style="height: 200px;">
-              <img [src]="'http://localhost:3000/upload/products/' + p.image" [alt]="p.designation" class="card-img-top h-100 w-100 object-fit-cover" >
+              <img [src]="apiUrl + '/upload/products/'  + p.image" [alt]="p.designation" class="card-img-top h-100 w-100 object-fit-cover" >
             </div>
             <div class="card-body">
               <h6 class="text-muted small mb-1">{{ p.category }}</h6>
