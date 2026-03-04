@@ -1,0 +1,55 @@
+<div class="login-container d-flex align-items-center justify-content-center">
+    <div class="glass-card p-4 p-md-5 d-flex flex-column align-items-center shadow-lg">
+  
+      <!-- Logo -->
+      <div class="mb-3">
+        <i class="pi pi-shopping-cart logo-icon"></i>
+      </div>
+  
+      <h2 class="text-white fw-semibold mb-1">Connexion</h2>
+      <p class="text-white-50 mb-4 text-center">
+        Accédez à votre compte pour continuer vos achats
+      </p>
+  
+      <form class="w-100" (ngSubmit)="login()">
+        <div class="input-group mb-3 custom-input">
+          <span class="input-group-text bg-transparent border-end-0 text-white-50">
+            <i class="pi pi-envelope"></i>
+          </span>
+          <input
+            type="email"
+            class="form-control bg-transparent border-start-0 text-white shadow-none"
+            placeholder="Email"
+            name="email"
+            [(ngModel)]="user.email"
+            required
+          />
+        </div>
+  
+        <div class="input-group mb-4 custom-input">
+          <span class="input-group-text bg-transparent border-end-0 text-white-50">
+            <i class="pi pi-lock"></i>
+          </span>
+          <input
+            type="password"
+            class="form-control bg-transparent border-start-0 text-white shadow-none"
+            placeholder="Mot de passe"
+            [(ngModel)]="user.password"
+            name="password"
+            required
+          />
+        </div>
+  
+        <button type="submit" class="btn btn-primary w-100 rounded-pill py-2 fw-bold">
+          Se connecter
+        </button>
+      </form>
+  
+      <div class="mt-3 d-flex justify-content-between w-100 small">
+        <a href="#" class="text-white-50 text-decoration-none hover-white">Mot de passe oublié ?</a>
+        <a href="#" class="text-white fw-semibold text-decoration-none hover-white">Créer un compte</a>
+      </div>
+  
+    </div>
+</div>
+  

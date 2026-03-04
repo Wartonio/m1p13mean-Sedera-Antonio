@@ -1,0 +1,45 @@
+/* Style des cartes */
+.rounded-4 {
+    border-radius: 1.25rem !important;
+}
+
+.card {
+    transition: transform 0.2s ease-in-out;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+}
+
+/* Boîtes d'icônes avec dégradés */
+.icon-box {
+    width: 42px;
+    height: 42px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+    font-size: 1.2rem;
+}
+
+.icon-cyan {
+    background: linear-gradient(180deg, #22d3ee 0%, #0891b2 100%);
+}
+
+.icon-orange {
+    background: linear-gradient(180deg, #fb923c 0%, #ea580c 100%);
+}
+
+.icon-slate {
+    background: linear-gradient(180deg, #94a3b8 0%, #475569 100%);
+}
+
+.icon-violet {
+    background: linear-gradient(180deg, #a78bfa 0%, #7c3aed 100%);
+}
+
+/* Fond de page gris très clair */
+.bg-light {
+    background-color: #f8fafc !important;
+}
+

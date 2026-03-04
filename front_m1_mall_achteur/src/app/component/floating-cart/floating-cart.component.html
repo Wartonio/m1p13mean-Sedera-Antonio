@@ -1,0 +1,8 @@
+<div class="floating-cart-container" cdkDrag>
+  
+    <div class="cart-badge" *ngIf="cartCount > 0">{{ cartCount }}</div>
+    
+    <button class="btn-cart shadow-lg" (click)="toggleCart()">
+        <i class="pi pi-shopping-cart"></i>
+    </button>
+</div>
