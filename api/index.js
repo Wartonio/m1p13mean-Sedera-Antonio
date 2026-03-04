@@ -6,7 +6,7 @@ const auth = require('./middleware/auth');
 const app = express();
 
 const corsOptions = {
-    origin: ['http://localhost:4200', 'http://localhost:4300'], 
+    origin: '*', 
     optionsSuccessStatus: 200,
     methods: "GET, POST, PUT, DELETE, PATCH",
     allowedHeaders: "Content-Type, Authorization" 
