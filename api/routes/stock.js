@@ -32,7 +32,7 @@ router.get('/all',  async (req, res) => {
 //   }
 // });
 
-router.get('/shop/:shopId', async (req, res) => {
+router.get('/shop/:shopId',auth,async (req, res) => {
   const { shopId } = req.params;
 
   if (!mongoose.Types.ObjectId.isValid(shopId)) {
@@ -59,7 +59,7 @@ router.get('/shop/:shopId', async (req, res) => {
 
 
 // CREATE stock
-router.post('/insertstock', async (req, res) => {
+router.post('/insertstock',auth, async (req, res) => {
   try {
     const { product, quantity, stockMin,shop } = req.body;
 
@@ -79,7 +79,7 @@ router.post('/insertstock', async (req, res) => {
 });
 
 
-router.get('/products-view/:shopId', async (req, res) => {
+router.get('/products-view/:shopId',auth, async (req, res) => {
     const { shopId } = req.params;
 
   if (!mongoose.Types.ObjectId.isValid(shopId)) {

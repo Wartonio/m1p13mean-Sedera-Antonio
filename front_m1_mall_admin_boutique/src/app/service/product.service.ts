@@ -21,8 +21,8 @@ export class ProductService {
     return this.http.get<Product[]>(`${this.apiUrl}/product/all`,this.getHttpOptions());
   }
 
-  getproductbyshop(shopid: string):Observable<Product[]> {
-    return this.http.get<Product[]>(`${this.apiUrl}/product/shops/${shopid}`,this.getHttpOptions());
+  getproductbyshop(shopId: string):Observable<Product[]> {
+    return this.http.get<Product[]>(`${this.apiUrl}/product/shops/${shopId}`,this.getHttpOptions());
   }
 
   getProductById(id: string): Observable<Product> {

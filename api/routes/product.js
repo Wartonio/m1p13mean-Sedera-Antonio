@@ -50,6 +50,18 @@ router.get('/all',auth,async (req, res) => {
   }
 });
 
+router.get('/shops/:shopId',auth,async (req, res) => {
+  try {
+    const products = await Product.find({ status: "active" },{shop :req.params.shopId})
+      .populate('shopId', 'nom')
+      .sort({ createdAt: -1 });
+    res.status(200).json(products);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Erreur lors de la récupération des produits" });
+  }
+});
+
 router.get('/One/:id',auth, async (req, res) => {
   try {
     const product = await Product.findOne({ _id: req.params.id }).populate('shopId', 'nom');
@@ -102,6 +114,7 @@ router.post('/insertproduct', auth, upload.single('image'), async (req, res) => 
       price,
       shop,
       shopId,
+      status : "active",
       // On stocke l'URL Cloudinary reçue
       image: imagePath 
     });
