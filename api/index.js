@@ -14,7 +14,8 @@ const corsOptions = {
 
 // Middlewares
 app.use(cors(corsOptions)); 
-app.use(express.json()); 
+app.use(express.json());
+app.use(express.urlencoded({extended: true}))
 
 // Connexion à la base de données
 console.log("Mongo is", process.env);
