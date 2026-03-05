@@ -114,8 +114,12 @@ router.post('/insert', auth, upload.single('image'), async (req, res) => {
     await newShop.save();
     res.status(201).json({ message: 'Boutique créée avec succès !' });
   } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: "Erreur lors de la création" });
+    console.error("Détail de l'erreur :", error); // Ceci apparaîtra mieux dans les logs Vercel
+    res.status(500).json({ 
+      error: "Erreur lors de la création", 
+      message: error.message, // Affiche le message précis
+      stack: error.stack      // Optionnel : pour voir la ligne exacte
+    });
   }
 });
 
