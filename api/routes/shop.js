@@ -110,7 +110,7 @@ router.post('/insert', auth, upload.single('image'), async (req, res) => {
                     if(error) reject(error);
                     else resolve(result);
                 }
-            ).end(file.buffer);
+            ).end(images.buffer);
         } );
 
       imagePath = result.secure_url;
