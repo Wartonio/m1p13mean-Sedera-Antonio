@@ -5,13 +5,46 @@ const Shop = require('../models/Shop');
 const multer = require('multer');
 const path = require('path');
 
+// --- CONFIGURATION CLOUDINARY ---
+const cloudinary = require('cloudinary').v2;
+const { CloudinaryStorage } = require('multer-storage-cloudinary');
+
+cloudinary.config({
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET
+});
+
+const storage = new CloudinaryStorage({
+  cloudinary: cloudinary,
+  params: {
+    folder: 'images', // Nom du dossier dans ton interface Cloudinary
+    allowed_formats: ['jpg', 'png', 'jpeg', 'webp'],
+    transformation: [{ width: 1000, height: 1000, crop: 'limit' }]
+  },
+});
+
+const upload = multer({
+  storage: storage,
+  limits: { fileSize: 2 * 1024 * 1024 }, // Limite de 2MB
+  fileFilter: (req, file, cb) => {
+    if (file.mimetype.startsWith('image/')) {
+      cb(null, true);
+    } else {
+      cb(new Error('Image seulement'));
+    }
+  }
+});
+
+// --- ROUTES GET ---
+
 router.get('/all', auth, async (req, res) => {
   try {
-      const users = await Shop.find().sort({ createdAt: -1 });    
-      res.status(200).json(users);
+    const users = await Shop.find().sort({ createdAt: -1 });
+    res.status(200).json(users);
   } catch (error) {
     console.error(error);
-      res.status(500).json({ error: "Erreur lors de la récupération des utilisateurs" });
+    res.status(500).json({ error: "Erreur lors de la récupération" });
   }
 });
 
@@ -32,7 +65,7 @@ router.get('/pagination', auth, async (req, res) => {
         .sort({ createdAt: -1 })
         .limit(limit)
         .skip((page - 1) * limit),
-      Shop.countDocuments(query) 
+      Shop.countDocuments(query)
     ]);
 
     res.status(200).json({
@@ -49,117 +82,93 @@ router.get('/pagination', auth, async (req, res) => {
 
 router.get('/one/:id', auth, async (req, res) => {
   try {
-      const userId = req.params.id;
-      const user = await Shop.findOne({_id: userId}).sort({ createdAt: -1 });    
-      res.status(200).json(user);
+    const userId = req.params.id;
+    const user = await Shop.findOne({ _id: userId }).sort({ createdAt: -1 });
+    res.status(200).json(user);
   } catch (error) {
     console.error(error);
-      res.status(500).json({ error: "Erreur lors de la récupération de l'utilisateur" });
+    res.status(500).json({ error: "Erreur lors de la récupération" });
   }
 });
 
-const storage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    cb(null, 'upload/products');
-  },
-  filename: function (req, file, cb) {
-    const ext = path.extname(file.originalname);
-    cb(null, Date.now() + ext);
+// --- ROUTE POST (INSERT) ---
+
+router.post('/insert', auth, upload.single('image'), async (req, res) => {
+  try {
+    const { nom, category, localisation, status, heureOuveture, heureFermeture, journal, remarque } = req.body;
+
+    const newShop = new Shop({
+      nom,
+      category,
+      localisation,
+      status,
+      heureOuveture,
+      heureFermeture,
+      journal,
+      remarque,
+      // Avec multer-storage-cloudinary, req.file.path contient l'URL sécurisée Cloudinary
+      image: req.file ? req.file.path : null, 
+      createdAt: new Date()
+    });
+
+    await newShop.save();
+    res.status(201).json({ message: 'Boutique créée avec succès !' });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Erreur lors de la création" });
   }
 });
 
-
-
-
-
-
-const upload =multer({
-    storage,
-    limits:{ fileSize: 2* 1024 * 1024},
-    fileFilter:(req,file,cb)=>{
-        if(file.mimetype.startsWith('image/')){
-            cb(null,true);
-        }
-        else{
-            cb(new Error('Image seulement'));
-        }
-    }
-});
-
-
-router.post('/insert',auth,upload.single('image'),  async (req, res) => {
-    try {
-      const { nom, category, localisation,status, heureOuveture,heureFermeture,journal,remarque} = req.body;
-  
-      const user = new Shop({
-            nom,
-            category,
-            localisation,
-            status,
-            heureOuveture,
-            heureFermeture,
-            journal,
-            remarque,
-            image: req.file ? req.file.filename : null,
-            createdAt: new Date()
-        });
-  
-      await user.save();
-      res.status(201).json({ message: 'Boutique créé avec succès !' });
-    } catch (error) {
-      console.error(error);
-      res.status(500).json({ error: "Erreur lors de la création" });
-    }
-});
+// --- ROUTES PATCH (UPDATE & DISABLE) ---
 
 router.patch('/update', auth, async (req, res) => {
-    try {
-      let updateData = { ...req.body };
-  
-      const updatedUser = await Shop.findByIdAndUpdate(
-        req.body._id,
-        { $set: updateData },
-        { new: true, runValidators: true }
-      );
-  
-      if (!updatedUser) return res.status(404).json({ error: 'Boutique non trouvé' });
-  
-      res.status(200).json({ message: 'Boutique mis à jour !', user: updatedUser });
-    } catch (error) {
-      console.error(error);
-      res.status(400).json({ error: 'Erreur lors de la mise à jour' });
-    }
+  try {
+    let updateData = { ...req.body };
+
+    const updatedUser = await Shop.findByIdAndUpdate(
+      req.body._id,
+      { $set: updateData },
+      { new: true, runValidators: true }
+    );
+
+    if (!updatedUser) return res.status(404).json({ error: 'Boutique non trouvée' });
+
+    res.status(200).json({ message: 'Boutique mise à jour !', user: updatedUser });
+  } catch (error) {
+    console.error(error);
+    res.status(400).json({ error: 'Erreur lors de la mise à jour' });
+  }
 });
 
 router.patch('/disable/:id', auth, async (req, res) => {
-    try {
-        const userId = req.params.id;
-        const newStatus = req.query.status; 
+  try {
+    const userId = req.params.id;
+    const newStatus = req.query.status;
 
-        if (req.auth.role !== 'admin') {
-            return res.status(403).json({ error: 'Seul un administrateur peut modifier le statut' });
-        }
-
-        if (!['active', 'inactive'].includes(newStatus)) {
-            return res.status(400).json({ error: 'Statut invalide' });
-        }
-
-        const user = await Shop.findByIdAndUpdate(
-            userId,
-            { $set: { status: newStatus } },
-            { new: true }
-        );
-
-        if (!user) return res.status(404).json({ error: 'Boutique non trouvé' });
-
-        res.status(200).json({ 
-            message: `Boutique passé en statut : ${newStatus}`, 
-            user 
-        });
-    } catch (error) {
-      console.error(error);
-        res.status(500).json({ error: 'Erreur lors du changement de statut' });
+    if (req.auth.role !== 'admin') {
+      return res.status(403).json({ error: 'Seul un administrateur peut modifier le statut' });
     }
+
+    if (!['active', 'inactive'].includes(newStatus)) {
+      return res.status(400).json({ error: 'Statut invalide' });
+    }
+
+    const user = await Shop.findByIdAndUpdate(
+      userId,
+      { $set: { status: newStatus } },
+      { new: true }
+    );
+
+    if (!user) return res.status(404).json({ error: 'Boutique non trouvée' });
+
+    res.status(200).json({
+      message: `Boutique passée en statut : ${newStatus}`,
+      user
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Erreur lors du changement de statut' });
+  }
 });
 
 module.exports = router;

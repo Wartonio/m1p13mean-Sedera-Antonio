@@ -1,106 +1,141 @@
 const express = require('express');
 const router = express.Router();
 const auth = require('../middleware/auth');
-const Product= require('../models/Product');
+const Product = require('../models/Product');
 const mongoose = require('mongoose');
 const multer = require('multer');
-const path = require('path');
 
-router.patch('/update', auth, async (req, res) => {
-    try {
-      let updateData = { ...req.body };
-  
-      const updatedUser = await Product.findByIdAndUpdate(
-        req.body._id,
-        { $set: updateData },
-        { new: true, runValidators: true }
-      );
-  
-      if (!updatedUser) return res.status(404).json({ error: 'Product non trouvé' });
-  
-      res.status(200).json({ message: 'Boutique mis à jour !', user: updatedUser });
-    } catch (error) {
-      console.error(error);
-      res.status(400).json({ error: 'Erreur lors de la mise à jour' });
-    }
+// --- CONFIGURATION CLOUDINARY ---
+const cloudinary = require('cloudinary').v2;
+const { CloudinaryStorage } = require('multer-storage-cloudinary');
+
+cloudinary.config({
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET
 });
 
+const storage = new CloudinaryStorage({
+  cloudinary: cloudinary,
+  params: {
+    folder: 'images', // Dossier spécifique pour les produits
+    allowed_formats: ['jpg', 'png', 'jpeg', 'webp'],
+    transformation: [{ width: 800, height: 800, crop: 'limit' }] 
+  },
+});
+
+const upload = multer({ 
+  storage: storage,
+  limits: { fileSize: 2 * 1024 * 1024 },
+  fileFilter: (req, file, cb) => {
+    if (file.mimetype.startsWith('image/')) {
+      cb(null, true);
+    } else {
+      cb(new Error('Image seulement'));
+    }
+  }
+});
+
+// --- ROUTES DE RÉCUPÉRATION (GET) ---
 
 router.get('/all', async (req, res) => {
   try {
-      const products = await Product.find({status :"active"})
-        .populate('shopId', 'nom')
-        .sort({ createdAt: -1 });    
-      res.status(200).json(products);
-  } catch (error) {
-    console.error(error);
-      res.status(500).json({ error: "Erreur lors de la récupération des produits" });
-  }
-});
-
-router.get('/One/:id', async (req,res) => {
-  try {
-    const productid=req.params.id;
-    const product = await Product.findOne({_id:productid})
-    .populate('shopId', 'nom');
-    res.status(200).json(product);
-  } catch (error) {
-    console.error("Erreur MongoDB:", error);
-    res.status(500).json({error: "Erreur lors de la recuperation du product"});
-  }
-} );
-
-router.get('/productshop/:id', async (req,res) => {
-  try {
-    const shopid=req.params.id;
-    const product = await Product.find({shopId:shopid,status: "active"})
-    .populate('shopId', 'nom');
-    res.status(200).json(product);
-  } catch (error) {
-    console.error("Erreur MongoDB:", error);
-    res.status(500).json({error: "Erreur lors de la recuperation du product"});
-  }
-} );
-
-
-// find product by shop
-router.get('/shops/:shopId', async (req, res) => {
-  const { shopId } = req.params;
-
-  if (!mongoose.Types.ObjectId.isValid(shopId)) {
-    return res.status(400).json({ error: 'Invalid shopId format' });
-  }
-
-  try {
-    const products = await Product.find({ shop: new mongoose.Types.ObjectId(shopId)})
-                                  .sort({ createdAt: -1 });
+    const products = await Product.find({ status: "active" })
+      .populate('shopId', 'nom')
+      .sort({ createdAt: -1 });
     res.status(200).json(products);
   } catch (error) {
     console.error(error);
-    res.status(500).json({ error: "Erreur lors de la récupération des produits du shop" });
+    res.status(500).json({ error: "Erreur lors de la récupération des produits" });
   }
 });
 
+router.get('/One/:id', async (req, res) => {
+  try {
+    const product = await Product.findOne({ _id: req.params.id }).populate('shopId', 'nom');
+    res.status(200).json(product);
+  } catch (error) {
+    res.status(500).json({ error: "Erreur lors de la récupération du produit" });
+  }
+});
+
+router.get('/productshop/:id', async (req, res) => {
+  try {
+    const product = await Product.find({ shopId: req.params.id, status: "active" })
+      .populate('shopId', 'nom');
+    res.status(200).json(product);
+  } catch (error) {
+    res.status(500).json({ error: "Erreur lors de la récupération" });
+  }
+});
+
+// --- ROUTE CRÉATION (INSERT) ---
+
+router.post('/insertproduct', auth, upload.single('image'), async (req, res) => {
+  try {
+    const { designation, reference, category, description, price, shop, shopId } = req.body;
+
+    const product = new Product({
+      designation,
+      reference,
+      category,
+      description,
+      price,
+      shop,
+      shopId,
+      // On stocke l'URL Cloudinary reçue
+      image: req.file ? req.file.path : null 
+    });
+
+    await product.save();
+    res.status(200).json({ message: 'Nouveau produit créé' });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: error.message });
+  }
+});
+
+// --- ROUTE MISE À JOUR (UPDATE) ---
+
+router.patch('/update', auth, upload.single('image'), async (req, res) => {
+  try {
+    let updateData = { ...req.body };
+
+    // Si une nouvelle image est téléchargée, on met à jour le champ image avec l'URL Cloudinary
+    if (req.file) {
+      updateData.image = req.file.path;
+    }
+
+    const updatedProduct = await Product.findByIdAndUpdate(
+      req.body._id,
+      { $set: updateData },
+      { new: true, runValidators: true }
+    );
+
+    if (!updatedProduct) return res.status(404).json({ error: 'Produit non trouvé' });
+
+    res.status(200).json({ message: 'Produit mis à jour !', product: updatedProduct });
+  } catch (error) {
+    console.error(error);
+    res.status(400).json({ error: 'Erreur lors de la mise à jour' });
+  }
+});
+
+// --- AUTRES ROUTES (SHOPS / PAGINATION) ---
+
 router.get('/shop/:shopId', async (req, res) => {
   const { shopId } = req.params;
-
   if (!mongoose.Types.ObjectId.isValid(shopId)) {
     return res.status(400).json({ error: 'Invalid shopId format' });
   }
 
-  // Paramètres pagination
   const page = parseInt(req.query.page) || 1;
   const limit = parseInt(req.query.limit) || 10;
   const skip = (page - 1) * limit;
 
   try {
-    const total = await Product.countDocuments({ 
-      shop: new mongoose.Types.ObjectId(shopId) 
-    });
-
-    const products = await Product.find({ 
-        shop: new mongoose.Types.ObjectId(shopId) 
-      })
+    const total = await Product.countDocuments({ shopId: new mongoose.Types.ObjectId(shopId) });
+    const products = await Product.find({ shopId: new mongoose.Types.ObjectId(shopId) })
       .sort({ createdAt: -1 })
       .skip(skip)
       .limit(limit);
@@ -111,74 +146,9 @@ router.get('/shop/:shopId', async (req, res) => {
       totalPages: Math.ceil(total / limit),
       totalItems: total
     });
-
   } catch (error) {
-    console.error(error);
-    res.status(500).json({ 
-      error: "Erreur lors de la récupération des produits du shop" 
-    });
+    res.status(500).json({ error: "Erreur lors de la récupération" });
   }
 });
-
-
-const storage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    cb(null, 'upload/products');
-  },
-  filename: function (req, file, cb) {
-    const ext = path.extname(file.originalname);
-    cb(null, Date.now() + ext);
-  }
-});
-
-
-
-
-
-
-const upload =multer({
-    storage,
-    limits:{ fileSize: 2* 1024 * 1024},
-    fileFilter:(req,file,cb)=>{
-        if(file.mimetype.startsWith('image/')){
-            cb(null,true);
-        }
-        else{
-            cb(new Error('Image seulement'));
-        }
-    }
-});
-
-
-router.post('/insertproduct', upload.single('image'), async (req, res) => {
-    try {
-
-           console.log(req.file);
-    console.log(req.body);
-        const { designation, reference, category, description, price, shop,shopId } = req.body;
-
-        const product = new Product({
-            designation,
-            reference,
-            category,
-            description,
-            price,
-            shop,
-            shopId,
-            image: req.file ? req.file.filename : null
-        });
-
-        await product.save();
-
-        res.status(200).json({ message: 'nouveau produit créé' });
-
-    } catch (error) {
-        console.error(error);
-        res.status(500).json({ error: error.message });
-    }
-});
-
-
-
 
 module.exports = router;
