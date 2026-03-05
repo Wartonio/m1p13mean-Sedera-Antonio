@@ -30,16 +30,16 @@ export class ProductService {
   }
 
   getProductByShoppage(
-  shopid: string,
-  page: number,
-  limit: number
-): Observable<PaginatedProducts> {
+    shopid: string,
+    page: number,
+    limit: number
+  ): Observable<PaginatedProducts> {
 
-  return this.http.get<PaginatedProducts>(
-    `${this.apiUrl}/product/shop/${shopid}?page=${page}&limit=${limit}`,
-    this.getHttpOptions()
-  );
-}
+    return this.http.get<PaginatedProducts>(
+      `${this.apiUrl}/product/shop/${shopid}?page=${page}&limit=${limit}`,
+      this.getHttpOptions()
+    );
+  }
 
   insertproduct(Util: Product): Observable<void>{
     return this.http.post<void>(`${this.apiUrl}/product/insertproduct`,Util,this.getHttpOptions());
