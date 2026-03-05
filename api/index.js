@@ -45,22 +45,22 @@ app.use('/api/shop',auth,categoryShops);
 
 // crud category produit
 const categoryproduct = require('./routes/categoryproduct');
-app.use('/api/categoryproduct',categoryproduct);
+app.use('/api/categoryproduct',auth,categoryproduct);
 
 //crud product
 const product =require('./routes/product');
-app.use('/api/product',product);
+app.use('/api/product',auth,product);
 
 //crud stock
 const stock =require('./routes/stock');
-app.use('/api/stock',stock);
+app.use('/api/stock',auth,stock);
 
 // //crud stock
 // const commande =require('./routes/commande');
 // app.use('/api/commande',commande);
 
 const commande = require('./routes/commande');
-app.use('/api/commande',commande)
+app.use('/api/commande',auth,commande)
 
 
 app.use('/upload', express.static('upload'));
