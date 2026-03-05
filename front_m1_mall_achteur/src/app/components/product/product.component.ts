@@ -43,10 +43,10 @@ export class ProductComponent {
     )
   }
 
-
-
-
-
-
-
+  addToCart(product : Product) {
+    if (product) {
+      this.cartService.addToCart(this.product);
+      // Optionnel: Notification de succès ici
+    }
+  }
 }
