@@ -114,11 +114,14 @@ router.post('/insert', auth, upload.single('image'), async (req, res) => {
     await newShop.save();
     res.status(201).json({ message: 'Boutique créée avec succès !' });
   } catch (error) {
-    console.error("Détail de l'erreur :", error); // Ceci apparaîtra mieux dans les logs Vercel
+    // JSON.stringify permet de transformer le [object Object] en vrai texte
+    console.error("ERREUR DETAILLEE :", JSON.stringify(error, null, 2));
+    console.error("MESSAGE :", error.message);
+    
     res.status(500).json({ 
-      error: "Erreur lors de la création", 
-      message: error.message, // Affiche le message précis
-      stack: error.stack      // Optionnel : pour voir la ligne exacte
+      error: "Erreur serveur", 
+      details: error.message,
+      fullError: error // Vercel affichera peut-être plus de détails dans la réponse HTTP
     });
   }
 });
