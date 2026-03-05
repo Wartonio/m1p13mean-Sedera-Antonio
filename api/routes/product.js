@@ -155,7 +155,7 @@ router.get('/shop/:shopId',auth,async (req, res) => {
 
   try {
     const total = await Product.countDocuments({ shopId: new mongoose.Types.ObjectId(shopId) });
-    const products = await Product.find({ shopId: new mongoose.Types.ObjectId(shopId) })
+    const products = await Product.find({ shop: new mongoose.Types.ObjectId(shopId) })
       .sort({ createdAt: -1 })
       .skip(skip)
       .limit(limit);
