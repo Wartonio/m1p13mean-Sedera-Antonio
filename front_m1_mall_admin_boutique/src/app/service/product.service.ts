@@ -46,7 +46,7 @@ export class ProductService {
   }
 
   insertproductimage(formData: FormData): Observable<any>{
-    return this.http.post(`${this.apiUrl}/product/insertproduct`,formData);
+    return this.http.post(`${this.apiUrl}/product/insertproduct`,formData,this.getHttpOptions());
   }
 
   private getHttpOptions() {
