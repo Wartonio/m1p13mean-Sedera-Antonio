@@ -25,8 +25,8 @@ const storage = new CloudinaryStorage({
 });
 
 const upload = multer({
-  storage: storage,
-  limits: { fileSize: 2 * 1024 * 1024 }, // Limite de 2MB
+  storage: multer.memoryStorage(),,
+  limits: { fileSize: 10 * 1024 * 1024 }, // Limite de 10MB
   fileFilter: (req, file, cb) => {
     if (file.mimetype.startsWith('image/')) {
       cb(null, true);
@@ -97,6 +97,25 @@ router.post('/insert', auth, upload.single('image'), async (req, res) => {
   try {
     const { nom, category, localisation, status, heureOuveture, heureFermeture, journal, remarque } = req.body;
 
+    const images = req.file || null;
+    let imagePath = null;
+
+    if(images){
+      const result = await new Promise( (resolve, reject) => {
+          cloudinary.uploader.upload_stream(
+            {
+                folder: "images",
+            },
+            (error, result) => {
+                    if(error) reject(error);
+                    else resolve(result);
+                }
+            ).end(file.buffer);
+        } );
+
+      imagePath = result.secure_url;
+    }
+
     const newShop = new Shop({
       nom,
       category,
@@ -107,7 +126,7 @@ router.post('/insert', auth, upload.single('image'), async (req, res) => {
       journal,
       remarque,
       // Avec multer-storage-cloudinary, req.file.path contient l'URL sécurisée Cloudinary
-      image: req.file ? req.file.path : null, 
+      image: imagePath, 
       createdAt: new Date()
     });
 
