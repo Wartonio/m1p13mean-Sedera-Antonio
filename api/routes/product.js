@@ -142,8 +142,9 @@ router.patch('/update', auth, upload.single('image'), async (req, res) => {
 
 // --- AUTRES ROUTES (SHOPS / PAGINATION) ---
 
-router.get('/shop/:shopId', async (req, res) => {
+router.get('/shop/:shopId',auth,async (req, res) => {
   const shopId  = req.params.shopId;
+  console.log("shopId",shopId);
   if (!mongoose.Types.ObjectId.isValid(shopId)) {
     return res.status(400).json({ error: 'Invalid shopId format' });
   }
