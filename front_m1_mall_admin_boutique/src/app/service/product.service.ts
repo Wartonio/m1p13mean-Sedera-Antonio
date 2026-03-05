@@ -46,7 +46,7 @@ export class ProductService {
   }
 
   insertproductimage(formData: FormData): Observable<any>{
-    return this.http.post(`${this.apiUrl}/product/insertproduct`,formData,this.getHttpOptions());
+    return this.http.post(`${this.apiUrl}/product/insertproduct`,formData,this.getHttpFormOptions());
   }
 
   private getHttpOptions() {
@@ -58,4 +58,13 @@ export class ProductService {
         })
         };
       }
+
+  private getHttpFormOptions() {
+      const token = localStorage.getItem('jwtToken');
+      return {
+        headers: new HttpHeaders({
+            'Authorization': `Bearer ${token}`
+        })
+      };
+  }
 }
