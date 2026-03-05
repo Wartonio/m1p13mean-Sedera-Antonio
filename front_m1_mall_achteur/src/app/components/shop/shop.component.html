@@ -22,7 +22,7 @@
           
             <div class="image-container">
     
-                <img [src]="apiUrl + '/upload/products/' + s.image"  class="shop-img" />
+                <img [src]="s.image"  class="shop-img" />
                 
                 <div *ngIf="!s.image" class="d-flex flex-column align-items-center">
                     <i class="pi pi-image placeholder-icon"></i>

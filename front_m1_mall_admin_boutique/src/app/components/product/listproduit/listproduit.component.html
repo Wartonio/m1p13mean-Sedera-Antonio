@@ -23,7 +23,7 @@
                         
                         <tr *ngFor="let user of product">
                             
-                            <th scope="row"><img [src]="apiUrl + '/upload/products/' + user.image" width="150" /></th>
+                            <th scope="row"><img [src]="user.image" width="150" /></th>
                             <td>{{ user.reference }}</td>
                             <td>{{ user.designation }}</td>
                             <td>{{ user.price }}</td>

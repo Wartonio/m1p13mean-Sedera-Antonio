@@ -1,6 +1,6 @@
 <div class="shop-profile" *ngIf="shop">
     <div class="bg-dark text-white py-5 mb-5 shadow-sm"
-         [style.background]="'linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url(apiUrl + /upload/shops/' + shop.image + ')'"
+         [style.background]="'linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url(shop.image)'"
          style="background-size: cover; background-position: center; min-height: 300px; display: flex; align-items: center;">
       <div class="container">
         <button (click)="redirectBack()" class="btn btn-sm btn-outline-light mb-4 rounded-pill">

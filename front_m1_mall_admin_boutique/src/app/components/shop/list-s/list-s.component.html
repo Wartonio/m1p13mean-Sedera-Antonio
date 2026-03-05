@@ -36,7 +36,7 @@
                     </thead>
                     <tbody>
                         <tr *ngFor="let user of shops">
-                            <th scope="row"><img [src]="apiUrl + '/upload/products/' + user.image" width="150" /></th>
+                            <th scope="row"><img [src]="user.image" width="150" /></th>
                             <td>{{ user.nom }}</td>
                             <td>{{ user.localisation }}</td>
                             <td>{{ user.category }}</td>
