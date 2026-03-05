@@ -8,14 +8,19 @@ import { AuthService } from 'src/app/service/auth.service';
   styleUrls: ['./topbar.component.css']
 })
 export class TopbarComponent {
-  ngOnInit(){
-    
-  }
-
+  
+  isLoggedIn: boolean = false;
+  
   constructor(
     private authService : AuthService,
     private router: Router
   ){}
+  
+  ngOnInit(){
+    this.authService.getIsLoggedIn().subscribe(isLoggedIn => {
+      this.isLoggedIn = isLoggedIn;
+    });
+  }
 
   logout() {
     this.authService.logout();

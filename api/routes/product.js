@@ -38,7 +38,7 @@ const upload = multer({
 
 // --- ROUTES DE RÉCUPÉRATION (GET) ---
 
-router.get('/all', async (req, res) => {
+router.get('/all',auth,async (req, res) => {
   try {
     const products = await Product.find({ status: "active" })
       .populate('shopId', 'nom')
@@ -50,7 +50,7 @@ router.get('/all', async (req, res) => {
   }
 });
 
-router.get('/One/:id', async (req, res) => {
+router.get('/One/:id',auth, async (req, res) => {
   try {
     const product = await Product.findOne({ _id: req.params.id }).populate('shopId', 'nom');
     res.status(200).json(product);
